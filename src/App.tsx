@@ -18,7 +18,7 @@ import {
     UpdatePostType
 } from "./Redux/State";
 
-
+// asdgit add
 type AppPropsType ={
     state: StateType
     dispatch: (action: AddPostActiveType | UpdatePostType | UpdateMessageType | SendMessageType) => void

@@ -12,11 +12,12 @@ import {
     AddPostActiveType,
     SendMessageType,
     StateType,
-    store,
+    //store,
     StoreType,
     UpdateMessageType,
     UpdatePostType
 } from "./Redux/State";
+import store from './Redux/ReduxStore';
 
 
 type AppPropsType ={

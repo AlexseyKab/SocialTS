@@ -1,6 +1,22 @@
 import {ActionsType, DialogsPageType} from "./State";
 
-export const DialogsReducer = (state: DialogsPageType, action: ActionsType): DialogsPageType => {
+let initializationState = {
+    dialogs: [
+        {id: 1, name: 'Alex'},
+        {id: 2, name: 'Olga'},
+        {id: 3, name: 'Dima'},
+        {id: 4, name: 'Sveta'},
+    ],
+        messages: [
+    {id: 1, message: 'Hi'},
+    {id: 2, message: 'How are you'},
+    {id: 3, message: 'It-incubator'},
+    {id: 4, message: 'it-kamasutra'},
+],
+    newMessageBody: ''
+}
+
+export const DialogsReducer = (state: DialogsPageType = initializationState, action: ActionsType): DialogsPageType => {
     if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
         //this._state.dialogsPage.newMessageBody = action.body
        // this._rerenderEntireTree(this._state);

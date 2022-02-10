@@ -1,3 +1,6 @@
+import {ProfileReducer} from "./ProfileReducer";
+import {DialogsReducer} from "./DialogsReducer";
+
 export type MessageType = {
     message: string
     id: number
@@ -26,13 +29,18 @@ export type StateType = {
 
 }
 
+export type ActionsType =
+    AddPostActiveType
+    | UpdatePostType
+    | UpdateMessageType
+    | SendMessageType
 
 export type StoreType = {
     _state: StateType
     subscribe: (callback: (state: StateType) => void) => void
     _rerenderEntireTree: (state: StateType) => void
     getState: () => StateType
-    dispatch: (action: AddPostActiveType | UpdatePostType | UpdateMessageType | SendMessageType) => void
+    dispatch: (action: ActionsType) => void
 }
 export type AddPostActiveType = {
     type: 'ADD-POST'
@@ -94,18 +102,20 @@ export const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            let newPost: PostDataType = {
-                id: 5,
-                message: action.postText,
-                value: 0
-            }
-            this._state.profilePage.postData.push(newPost)
-            this._rerenderEntireTree(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newPostText
-            this._rerenderEntireTree(this._state);
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+        // if (action.type === 'ADD-POST') {
+        //     let newPost: PostDataType = {
+        //         id: 5,
+        //         message: action.postText,
+        //         value: 0
+        //     }
+        //     this._state.profilePage.postData.push(newPost)
+        //     this._rerenderEntireTree(this._state);
+        // } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        //     this._state.profilePage.newPostText = action.newPostText
+        //     this._rerenderEntireTree(this._state);
+        // } else
+        this._state.profilePage = ProfileReducer(this._state.profilePage, action)
+       /*     if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
             this._state.dialogsPage.newMessageBody = action.body
             this._rerenderEntireTree(this._state);
         } else if (action.type === 'SEND-MESSAGE') {
@@ -113,7 +123,9 @@ export const store: StoreType = {
             this._state.dialogsPage.newMessageBody = ''
             this._state.dialogsPage.messages.push({id: 5, message: body})
             this._rerenderEntireTree(this._state);
-        }
+        }*/
+        this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
+        this._rerenderEntireTree(this._state);
     }
 }
 export const addPostAC = (postText: string): AddPostActiveType => {

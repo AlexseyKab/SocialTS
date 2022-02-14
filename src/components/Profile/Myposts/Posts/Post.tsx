@@ -1,12 +1,12 @@
-import React from "react";
+import React, {FC} from "react";
 import s from "./Post.module.css"
 
-type propsPost = {
+export type propsPost = {
     message: string
     value: number
 }
 
-const Post = (props: propsPost) => {
+const Post:FC<propsPost> = (props) => {
 
 
     return (

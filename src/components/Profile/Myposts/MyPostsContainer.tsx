@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType, FC} from "react";
 import Post from "./Posts/Post";
 import {addPostAC, AddPostActiveType, onPostChangeAC, UpdatePostType} from "../../../Redux/State";
 import MyPosts from "./MyPosts";
@@ -7,7 +7,7 @@ export type typeMyPostProps = {
     postData: Array<typePostData>
     newPostText: string
     dispatch: (action: AddPostActiveType | UpdatePostType) => void
-   /* addPost: (m: string) => void*/
+    /* addPost: (m: string) => void*/
     /*updateNewPostText: (newPostText: string) => void*/
 }
 
@@ -18,9 +18,8 @@ export type typePostData = {
 }
 
 
-
 const MyPostsContainer = (props: typeMyPostProps) => {
-    let postElements =
+    let postElements: Array<JSX.Element> =
         props.postData.map(p => <Post message={p.message} value={p.value}/>)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
@@ -29,8 +28,8 @@ const MyPostsContainer = (props: typeMyPostProps) => {
     let addPost = () => {
         //let text = newPostElement.current ? newPostElement.current.value : '----'
         //let text = newPostElement.current.value
-        if(newPostElement.current) {
-            props.dispatch(addPostAC(newPostElement.current.value)  )
+        if (newPostElement.current) {
+            props.dispatch(addPostAC(newPostElement.current.value))
             props.dispatch(onPostChangeAC(''))
         }
     }
@@ -44,9 +43,14 @@ const MyPostsContainer = (props: typeMyPostProps) => {
 
     }
 
-    return (<MyPosts postData={props.postData}
-                     newPostText={props.newPostText}
-                     dispatch={props.dispatch}/>)
+    return (<MyPosts
+        postElements={postElements}
+        newPostElement={newPostElement}
+        addPost={addPost}
+        onPostChange={onPostChange}
+        postData={props.postData}
+        newPostText={props.newPostText}
+        dispatch={props.dispatch}/>)
 }
 
 export default MyPostsContainer;

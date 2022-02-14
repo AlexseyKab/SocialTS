@@ -20,13 +20,13 @@ import {
 import store from './Redux/ReduxStore';
 
 
-type AppPropsType ={
+type AppPropsType = {
     state: StateType
     dispatch: (action: AddPostActiveType | UpdatePostType | UpdateMessageType | SendMessageType) => void
     store: StoreType
 
- /*   addPost: (m: string) => void
-    updateNewPostText: (newPostText: string) => void*/
+    /*   addPost: (m: string) => void
+       updateNewPostText: (newPostText: string) => void*/
 }
 
 
@@ -42,20 +42,21 @@ function App(props: AppPropsType) {
                 <Header/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile" render={ () => <Profile posts={posts}
-                                                                   dispatch={store.dispatch.bind(store)}
-                                                                   /*addPost={props.addPost}*/
-                                                                   newPostText={props.state.profilePage.newPostText}
-                                                                   /*updateNewPostText={props.updateNewPostText}*/
+                    <Route path="/profile" render={() => <Profile
+                        posts={posts}
+                        dispatch={store.dispatch.bind(store)}
+                        /*addPost={props.addPost}*/
+                        newPostText={props.state.profilePage.newPostText}
+                        /*updateNewPostText={props.updateNewPostText}*/
 
 
-                    /> }/>
-                    <Route path="/messages" render={ () => <Dialogs dialogs={dialogs}
-                                                                    store={props.store}
-                                                                    messages={messages} /> }/>
-                    <Route path="/music" render={ () => <Music /> }/>
-                    <Route path="/settings" render={ () => <Settings /> }/>
-                    <Route path="/news" render={ () => <News /> }/>
+                    />}/>
+                    <Route path="/messages" render={() => <Dialogs dialogs={dialogs}
+                                                                   store={props.store}
+                                                                   messages={messages}/>}/>
+                    <Route path="/music" render={() => <Music/>}/>
+                    <Route path="/settings" render={() => <Settings/>}/>
+                    <Route path="/news" render={() => <News/>}/>
                 </div>
             </div>
         </BrowserRouter>

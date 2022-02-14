@@ -17,36 +17,26 @@ export type DialogsPropsType = {
     messages: Array<MessageType>
     dialogs: Array<DialogsType>
     store: StoreType
+    messegesElement: any
+    newMessageBody: any
+    onSendMessageClick: ()=> void
+    onNewMessageChange: (e: any)=> void
+    dialogsElement: any
 }
 
 const Dialogs = (props: DialogsPropsType) =>{
-
-    const state = props.store.getState().dialogsPage
-
-    let dialogsElement = props.dialogs.map( d => <DialogsItem name={d.name} id={d.id}/> )
-    let messegesElement = props.messages.map( m => <MessageProps message={m.message}/> )
-    let newMessageBody = state.newMessageBody
-
-    let onSendMessageClick = () => {
-        props.store.dispatch(sendMessageAC())
-    }
-    let onNewMessageChange = (e: any) => {
-        let body = e.target.value
-        props.store.dispatch(updateNewMessageBodyAC(body))
-    }
-
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                {dialogsElement}
+                {props.dialogsElement}
             </div>
             <div className={s.messages}>
-                <div>{messegesElement}</div>
+                <div>{props.messegesElement}</div>
                 <div>
-                    <div><textarea value={newMessageBody}
-                                   onChange={onNewMessageChange}
+                    <div><textarea value={props.newMessageBody}
+                                   onChange={props.onNewMessageChange}
                                    placeholder={"Введите текст"}/></div>
-                    <div><button onClick={onSendMessageClick}>Send</button></div>
+                    <div><button onClick={props.onSendMessageClick}>Send</button></div>
                 </div>
             </div>
         </div>

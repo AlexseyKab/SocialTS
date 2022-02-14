@@ -18,6 +18,7 @@ import {
     UpdatePostType
 } from "./Redux/State";
 import store from './Redux/ReduxStore';
+import DialogsContaner from "./components/Profile/Dialogs/DialogsContaner";
 
 
 type AppPropsType = {
@@ -51,7 +52,7 @@ function App(props: AppPropsType) {
 
 
                     />}/>
-                    <Route path="/messages" render={() => <Dialogs dialogs={dialogs}
+                    <Route path="/messages" render={() => <DialogsContaner dialogs={dialogs}
                                                                    store={props.store}
                                                                    messages={messages}/>}/>
                     <Route path="/music" render={() => <Music/>}/>

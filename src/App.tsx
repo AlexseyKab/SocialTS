@@ -22,9 +22,9 @@ import DialogsContaner from "./components/Profile/Dialogs/DialogsContaner";
 
 
 type AppPropsType = {
-    state: StateType
+ /*   state: StateType
     dispatch: (action: AddPostActiveType | UpdatePostType | UpdateMessageType | SendMessageType) => void
-    store: StoreType
+    store: StoreType*/
 
     /*   addPost: (m: string) => void
        updateNewPostText: (newPostText: string) => void*/
@@ -32,10 +32,10 @@ type AppPropsType = {
 
 
 function App(props: AppPropsType) {
-    let posts = props.state.profilePage.postData
+   /* let posts = props.state.profilePage.postData
     let dialogs = props.state.dialogsPage.dialogs
     let messages = props.state.dialogsPage.messages
-    let profilePage = props.state.profilePage.newPostText
+    let profilePage = props.state.profilePage.newPostText*/
 
     return (
         <BrowserRouter>
@@ -43,21 +43,13 @@ function App(props: AppPropsType) {
                 <Header/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile" render={() => <Profile
-                        posts={posts}
-                        dispatch={store.dispatch.bind(store)}
-                        /*addPost={props.addPost}*/
-                        newPostText={props.state.profilePage.newPostText}
-                        /*updateNewPostText={props.updateNewPostText}*/
 
-
-                    />}/>
-                    <Route path="/messages" render={() => <DialogsContaner dialogs={dialogs}
-                                                                   store={props.store}
-                                                                   messages={messages}/>}/>
+                    <Route path="/profile" render={() => <Profile/>}/>
+                    <Route path="/messages" render={() => <DialogsContaner/>}/>
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/news" render={() => <News/>}/>
+
                 </div>
             </div>
         </BrowserRouter>

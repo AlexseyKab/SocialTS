@@ -59,11 +59,11 @@ export type UpdateMessageType = {
 
 export type SendMessageType = {
     type: "SEND-MESSAGE"
-
+value:string
 
 }
 
-export const store: StoreType = {
+export const store: any = {
     _state: {
         dialogsPage: {
             dialogs: [
@@ -101,7 +101,8 @@ export const store: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action) {
+    dispatch(action: any) {
+        console.log('dispatc', this, action)
         // if (action.type === 'ADD-POST') {
         //     let newPost: PostDataType = {
         //         id: 5,
@@ -141,9 +142,10 @@ export const onPostChangeAC = (newPostText: string): UpdatePostType => {
         newPostText: newPostText
     }
 }
-export const sendMessageAC = (): SendMessageType => {
+export const sendMessageAC = (value:string): SendMessageType => {
     return {
         type: "SEND-MESSAGE",
+        value: value
     }
 }
 

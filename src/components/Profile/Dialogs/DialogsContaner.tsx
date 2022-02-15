@@ -1,28 +1,13 @@
 import React from "react";
-import s from './Dialogs.module.css'
-import DialogsItem from "./DialogsItem/DialogsItem";
-import MessageProps from "./MessageProps/MessageProps";
-import {sendMessageAC, StoreType, updateNewMessageBodyAC} from "../../../Redux/State";
-import Dialogs from "./Dialogs";
+import Dialogs, {DialogsType, MessageType} from "./Dialogs";
+import {connect} from "react-redux";
+import {sendMessageAC, StateType, updateNewMessageBodyAC} from "../../../Redux/State";
+import {AppRootStateType} from "../../../Redux/Redux-Store";
+import {Dispatch} from "redux";
 
-export type DialogsType = {
-    id: number
-    name: string
-}
 
-export type MessageType = {
-    message: string
-}
 
-export type DialogsPropsType = {
-    messages: Array<MessageType>
-    dialogs: Array<DialogsType>
-    store: StoreType
-}
-
-const DialogsContaner = (props: DialogsPropsType) => {
-
-    const state = props.store.getState().dialogsPage
+/*const DialogsContaner = (props: DialogsPropsType) => {
 
     let dialogsElement = props.dialogs.map(d => <DialogsItem name={d.name} id={d.id}/>)
 
@@ -51,21 +36,35 @@ const DialogsContaner = (props: DialogsPropsType) => {
 
         />
     )
+}*/
+
+let mapStateToProps = (state: AppRootStateType):MSTType => {
+    return {
+        newMessageBody: state.dialogsPage.newMessageBody,
+        messages: state.dialogsPage.messages,
+            dialogs: state.dialogsPage.dialogs,
+    }
 }
+
+let mapDispatchToProps = (dispatch: Dispatch):MDTType => {
+    return {
+        onNewMessageChange: (value) => { dispatch(updateNewMessageBodyAC(value)) },
+        onSendMessageClick: (text: string) => { dispatch(sendMessageAC(text)) }
+    }
+}
+
+const DialogsContaner = connect<MSTType, MDTType, {},AppRootStateType>(mapStateToProps, mapDispatchToProps) (Dialogs)
+
+
 
 export default DialogsContaner;
 
-/* <div className={s.dialogs}>
-            <div className={s.dialogsItem}>
-                {dialogsElement}
-            </div>
-            <div className={s.messages}>
-                <div>{messegesElement}</div>
-                <div>
-                    <div><textarea value={newMessageBody}
-                                   onChange={onNewMessageChange}
-                                   placeholder={"Введите текст"}/></div>
-                    <div><button onClick={onSendMessageClick}>Send</button></div>
-                </div>
-            </div>
-        </div>*/
+type MSTType={
+    newMessageBody: string
+    messages: Array<MessageType>
+    dialogs: Array<DialogsType>
+}
+type MDTType={
+    onNewMessageChange: (e: any)=> void
+    onSendMessageClick: (text: string)=> void
+}

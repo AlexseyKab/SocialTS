@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from './Dialogs.module.css'
 import DialogsItem from "./DialogsItem/DialogsItem";
 import MessageProps from "./MessageProps/MessageProps";
@@ -15,28 +15,40 @@ export type MessageType = {
 
 export type DialogsPropsType = {
     messages: Array<MessageType>
-    dialogs: Array<DialogsType>
-    store: StoreType
-    messegesElement: any
-    newMessageBody: any
-    onSendMessageClick: ()=> void
+     dialogs: Array<DialogsType>
+    // store: StoreType
+    // messegesElement: any
+    newMessageBody: string
+    onSendMessageClick: (text: string)=> void
     onNewMessageChange: (e: any)=> void
-    dialogsElement: any
 }
 
 const Dialogs = (props: DialogsPropsType) =>{
+
+    let dialogsElement = props.dialogs.map(d => <DialogsItem name={d.name} id={d.id}/>)
+
+    let messegesElement = props.messages.map(m => <MessageProps message={m.message}/>)
+
+    function handlerChange(e: ChangeEvent<HTMLTextAreaElement>) {
+        props.onNewMessageChange(e.currentTarget.value)
+    }
+
+    function handlerClick() {
+        props.onSendMessageClick(props.newMessageBody)
+    }
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                {props.dialogsElement}
+                {dialogsElement}
             </div>
             <div className={s.messages}>
-                <div>{props.messegesElement}</div>
+                <div>{messegesElement}</div>
                 <div>
                     <div><textarea value={props.newMessageBody}
-                                   onChange={props.onNewMessageChange}
+                                   onChange={handlerChange}
                                    placeholder={"Введите текст"}/></div>
-                    <div><button onClick={props.onSendMessageClick}>Send</button></div>
+                    <div><button onClick={handlerClick}>Send</button></div>
                 </div>
             </div>
         </div>

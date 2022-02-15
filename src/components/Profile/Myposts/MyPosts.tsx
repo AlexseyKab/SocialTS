@@ -1,18 +1,13 @@
-import React, {ComponentType, FC, RefObject} from "react";
-import Post, {propsPost} from "./Posts/Post";
+import React, {ChangeEvent, RefObject} from "react";
 import s from "./MyPosts.module.css"
-import {addPostAC, AddPostActiveType, onPostChangeAC, UpdatePostType} from "../../../Redux/State";
+import {AddPostActiveType, UpdatePostType} from "../../../Redux/State";
+import Post from "./Posts/Post";
 
 export type typeMyPostProps = {
     postData: Array<typePostData>
     newPostText: string
-    dispatch: (action: AddPostActiveType | UpdatePostType) => void
-    /*addPost: (m: string) => void*/
-    /*updateNewPostText: (newPostText: string) => void*/
-    onPostChange: () => void
-    addPost: () => void
-    newPostElement: RefObject<HTMLTextAreaElement>
-    postElements: Array<JSX.Element>
+    onPostChange: (postText: string) => void
+    addPost: (text: string) => void
 }
 
 export type typePostData = {
@@ -25,23 +20,33 @@ export type typePostData = {
 
 
 const MyPosts = (props: typeMyPostProps) => {
+
+    let postElements: Array<JSX.Element> = props.postData.map(p => <Post message={p.message} value={p.value}/>)
+
+    function handleChange(ev: ChangeEvent<HTMLTextAreaElement>) {
+        props.onPostChange(ev.currentTarget.value)
+    }
+
+    function handleClick() {
+        props.addPost(props.newPostText)
+    }
+
     return (
         <div className={s.description}>
             <div>
                 My posts
             </div>
             <div>
-                <textarea onChange={props.onPostChange}
-                          ref={props.newPostElement}
+                <textarea onChange={handleChange}
                           value={props.newPostText}/>
             </div>
             <div>
-                <button onClick={props.addPost}>Add post</button>
+                <button onClick={handleClick}>Add post</button>
             </div>
             <div className={s.posts}>
                 <h3>New post</h3>
             </div>
-            {props.postElements}
+            {postElements}
         </div>
     )
 }

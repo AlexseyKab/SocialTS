@@ -6,7 +6,6 @@ import {AppRootStateType} from "../../../Redux/Redux-Store";
 import {Dispatch} from "redux";
 
 
-
 /*const DialogsContaner = (props: DialogsPropsType) => {
 
     let dialogsElement = props.dialogs.map(d => <DialogsItem name={d.name} id={d.id}/>)
@@ -38,33 +37,36 @@ import {Dispatch} from "redux";
     )
 }*/
 
-let mapStateToProps = (state: AppRootStateType):MSTType => {
+let mapStateToProps = (state: AppRootStateType): MSTType => {
     return {
         newMessageBody: state.dialogsPage.newMessageBody,
         messages: state.dialogsPage.messages,
-            dialogs: state.dialogsPage.dialogs,
+        dialogs: state.dialogsPage.dialogs,
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch):MDTType => {
+let mapDispatchToProps = (dispatch: Dispatch): MDTType => {
     return {
-        onNewMessageChange: (value) => { dispatch(updateNewMessageBodyAC(value)) },
-        onSendMessageClick: (text: string) => { dispatch(sendMessageAC(text)) }
+        onNewMessageChange: (value) => {
+            dispatch(updateNewMessageBodyAC(value))
+        },
+        onSendMessageClick: (text: string) => {
+            dispatch(sendMessageAC(text))
+        }
     }
 }
 
-const DialogsContaner = connect<MSTType, MDTType, {},AppRootStateType>(mapStateToProps, mapDispatchToProps) (Dialogs)
-
+const DialogsContaner = connect<MSTType, MDTType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 
 export default DialogsContaner;
 
-type MSTType={
+type MSTType = {
     newMessageBody: string
     messages: Array<MessageType>
     dialogs: Array<DialogsType>
 }
-type MDTType={
-    onNewMessageChange: (e: any)=> void
-    onSendMessageClick: (text: string)=> void
+type MDTType = {
+    onNewMessageChange: (e: any) => void
+    onSendMessageClick: (text: string) => void
 }

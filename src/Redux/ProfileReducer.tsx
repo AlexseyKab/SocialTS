@@ -19,14 +19,16 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
         }
         return {
             ...state,
-            postData: state.postData.concat(newPost)
+            postData: state.postData.concat(newPost),
+            newPostText: ''
         }
         //this._state.profilePage.postData.push(newPost)
         //this._rerenderEntireTree(this._state);
     } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
         return {
             ...state,
-            newPostText: action.newPostText
+            newPostText: action.newPostText,
+
         }
         //this._state.profilePage.newPostText = action.newPostText
         //this._rerenderEntireTree(this._state);

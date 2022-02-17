@@ -19,6 +19,7 @@ import {
 } from "./Redux/State";
 import store from './Redux/ReduxStore';
 import DialogsContaner from "./components/Profile/Dialogs/DialogsContaner";
+import Users from "./components/Users/Users";
 
 
 type AppPropsType = {
@@ -46,6 +47,7 @@ function App(props: AppPropsType) {
 
                     <Route path="/profile" render={() => <Profile/>}/>
                     <Route path="/messages" render={() => <DialogsContaner/>}/>
+                    <Route path="/users" render={() => <Users/>}/>
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/settings" render={() => <Settings/>}/>
                     <Route path="/news" render={() => <News/>}/>

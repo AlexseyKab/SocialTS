@@ -7,7 +7,7 @@ type LocalType = {
     country: string
 }
 
-type ISType = {
+export type ISType = {
     id: number,
     followed: boolean
     fullName: string,
@@ -20,6 +20,10 @@ export type followACType = {
 export type unfollowACType = {
     type: 'UNFOLLOW',
     userId: number
+}
+export type setUsersACType = {
+    type: 'SET_USERS',
+    users: any
 }
 
 let initialState = {
@@ -55,13 +59,22 @@ const UsersReducer = (state = initialState, action: ActionsType) => {
                 })
             }
         }
+        case 'SET_USERS': {
+            return {
+                ...state,
+                users: [...state.users, action.users]
+            }
+        }
 
-        default: return state
+        default:
+            return state
     }
 }
 
 export const followAC = (userId: number) => ({type: 'FOLLOW', userId})
 export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW', userId})
+export const setUsersAC = (users: any) => ({type: 'SET_USERS', users})
+
 
 export default UsersReducer
 

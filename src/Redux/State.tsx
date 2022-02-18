@@ -1,6 +1,6 @@
 import {ProfileReducer} from "./ProfileReducer";
 import {DialogsReducer} from "./DialogsReducer";
-import {followACType, unfollowACType} from "./UsersReducer";
+import {followACType, setUsersACType, unfollowACType} from "./UsersReducer";
 
 export type MessageType = {
     message: string
@@ -37,6 +37,7 @@ export type ActionsType =
     | SendMessageType
     | followACType
     | unfollowACType
+    | setUsersACType
 
 export type StoreType = {
     _state: StateType
@@ -62,7 +63,7 @@ export type UpdateMessageType = {
 
 export type SendMessageType = {
     type: "SEND-MESSAGE"
-value:string
+    value: string
 
 }
 
@@ -119,15 +120,15 @@ export const store: any = {
         //     this._rerenderEntireTree(this._state);
         // } else
         this._state.profilePage = ProfileReducer(this._state.profilePage, action)
-       /*     if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-            this._state.dialogsPage.newMessageBody = action.body
-            this._rerenderEntireTree(this._state);
-        } else if (action.type === 'SEND-MESSAGE') {
-            let body = this._state.dialogsPage.newMessageBody
-            this._state.dialogsPage.newMessageBody = ''
-            this._state.dialogsPage.messages.push({id: 5, message: body})
-            this._rerenderEntireTree(this._state);
-        }*/
+        /*     if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+             this._state.dialogsPage.newMessageBody = action.body
+             this._rerenderEntireTree(this._state);
+         } else if (action.type === 'SEND-MESSAGE') {
+             let body = this._state.dialogsPage.newMessageBody
+             this._state.dialogsPage.newMessageBody = ''
+             this._state.dialogsPage.messages.push({id: 5, message: body})
+             this._rerenderEntireTree(this._state);
+         }*/
         this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
         this._rerenderEntireTree(this._state);
     }
@@ -145,14 +146,14 @@ export const onPostChangeAC = (newPostText: string): UpdatePostType => {
         newPostText: newPostText
     }
 }
-export const sendMessageAC = (value:string): SendMessageType => {
+export const sendMessageAC = (value: string): SendMessageType => {
     return {
         type: "SEND-MESSAGE",
         value: value
     }
 }
 
-export const updateNewMessageBodyAC = (text: string):UpdateMessageType => {
+export const updateNewMessageBodyAC = (text: string): UpdateMessageType => {
     return {
         type: 'UPDATE-NEW-MESSAGE-BODY',
         body: text

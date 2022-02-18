@@ -11,7 +11,7 @@ type UsersType ={
 
 
 const Users = (props: UsersType) => {
-    debugger
+
     return <div >
         {
             props.users.map(u => <div key={u.id}>
@@ -20,7 +20,9 @@ const Users = (props: UsersType) => {
                         <img src={u.photoUrl}  className={s.photo}/>
                     </div>
                     <div>
-                        <button>Follow</button>
+                        {u.followed ? <button onClick={() => {props.unfollow(u.id)}}>Follow</button>
+                            : <button onClick={()=>{ props.follow(u.id) }}>Unfollow</button>}
+
                     </div>
                 </span>
                 <span>

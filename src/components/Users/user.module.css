@@ -1,10 +1,6 @@
-.item {
-    color: green;
-}
-
-.item img{
-    width: 75px;
-    height: 75px;
+.photo {
+    width: 85px;
+    height: 85px;
     border-radius: 100px; /* Радиус скругления */
     border: 3px solid black; /* Параметры рамки */
     box-shadow: 0 0 7px #666;

@@ -1,6 +1,6 @@
 import {ProfileReducer} from "./ProfileReducer";
 import {DialogsReducer} from "./DialogsReducer";
-import {followACType, setUsersACType, unfollowACType} from "./UsersReducer";
+import {followACType, ISType, setUsersACType, unfollowACType} from "./UsersReducer";
 
 export type MessageType = {
     message: string
@@ -38,6 +38,7 @@ export type ActionsType =
     | followACType
     | unfollowACType
     | setUsersACType
+
 
 export type StoreType = {
     _state: StateType

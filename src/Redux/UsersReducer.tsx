@@ -5,12 +5,16 @@ type LocalType = {
     city: string,
     country: string
 }
-
-export type ISType = {
+export type UserType={
     id: number,
     followed: boolean
     fullName: string,
-    location: Array<LocalType>
+    status: string
+    photoUrl: string,
+    location: LocalType
+}
+export type ISType = {
+    users: Array<UserType>
 }
 export type followACType = {
     type: 'FOLLOW',
@@ -25,15 +29,21 @@ export type setUsersACType = {
     users: any
 }
 
-let initialState = {
+let initialState:ISType = {
     users: [
-        {id: 1, followed: false, fullName: "I am boss", location: {city: "Minsk", country: "Belarus"} },
-        {id: 2, followed: true, fullName: "I am boss too", location: {city: "Moscow", country: "Russia"} },
-        {id: 3, followed: false, fullName: "I am boss too", location: {city: "Kiev", country: "Ukraine"} },
+        {id: 1, followed: false,
+            photoUrl: 'https://avatarfiles.alphacoders.com/288/thumb-1920-288376.jpg',
+            fullName: 'Dmitry', status: "I am boss", location: {city: "Minsk", country: "Belarus"} },
+        {id: 2, followed: true,
+            photoUrl: 'https://avatarfiles.alphacoders.com/288/thumb-1920-288376.jpg',
+            fullName: 'Sasha', status: "I am boss too", location: {city: "Moscow", country: "Russia"} },
+        {id: 3, followed: false,
+            photoUrl: 'https://avatarfiles.alphacoders.com/288/thumb-1920-288376.jpg',
+            fullName: 'Andrey',status: "I am boss too", location: {city: "Kiev", country: "Ukraine"} },
     ],
 }
 
-const UsersReducer = (state = initialState, action: ActionsType) => {
+const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType => {
     switch (action.type) {
     case 'FOLLOW':{
             return {

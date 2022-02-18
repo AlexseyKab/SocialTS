@@ -1,6 +1,5 @@
 import React from "react";
 import {ActionsType} from "./State";
-import {deflate} from "zlib";
 
 type LocalType = {
     city: string,
@@ -62,7 +61,7 @@ const UsersReducer = (state = initialState, action: ActionsType) => {
         case 'SET_USERS': {
             return {
                 ...state,
-                users: [...state.users, action.users]
+                users: [...state.users, ...action.users]
             }
         }
 

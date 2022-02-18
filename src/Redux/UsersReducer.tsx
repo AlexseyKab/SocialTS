@@ -5,10 +5,17 @@ type LocalType = {
     city: string,
     country: string
 }
+
+type PhotoType = {
+    small: null | string
+    large: null | string
+}
+
 export type UserType={
     id: number,
     followed: boolean
-    fullName: string,
+    photos: PhotoType
+    name: string,
     status: string
     photoUrl: string,
     location: LocalType
@@ -31,15 +38,7 @@ export type setUsersACType = {
 
 let initialState:ISType = {
     users: [
-        {id: 1, followed: false,
-            photoUrl: 'https://avatarfiles.alphacoders.com/288/thumb-1920-288376.jpg',
-            fullName: 'Dmitry', status: "I am boss", location: {city: "Minsk", country: "Belarus"} },
-        {id: 2, followed: true,
-            photoUrl: 'https://avatarfiles.alphacoders.com/288/thumb-1920-288376.jpg',
-            fullName: 'Sasha', status: "I am boss too", location: {city: "Moscow", country: "Russia"} },
-        {id: 3, followed: false,
-            photoUrl: 'https://avatarfiles.alphacoders.com/288/thumb-1920-288376.jpg',
-            fullName: 'Andrey',status: "I am boss too", location: {city: "Kiev", country: "Ukraine"} },
+
     ],
 }
 

@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Dispatch} from "redux";
 import {followAC, setUsersAC, unfollowAC} from "../../Redux/UsersReducer";
+import UsersClass from "./UsersClass";
 
 let mapStateToProps = (state: AppRootStateType) => {
     return {
@@ -25,4 +26,4 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export default connect (mapStateToProps, mapDispatchToProps) (Users)
+export default connect (mapStateToProps, mapDispatchToProps) (UsersClass)

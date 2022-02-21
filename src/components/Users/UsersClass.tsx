@@ -5,33 +5,39 @@ import axios from "axios";
 import {UserType} from "../../Redux/UsersReducer";
 
 
-type UsersType ={
-  follow: (userId: number)=> void
-    setUsers: (users: any)=> void
-    unfollow: (userId: number)=> void
+type UsersType = {
+    follow: (userId: number) => void
+    setUsers: (users: any) => void
+    unfollow: (userId: number) => void
     users: UserType[]
 }
 
-class UsersClass extends React.Component<UsersType>{
+class UsersClass extends React.Component<UsersType> {
     getUsers = () => {
+
         if (this.props.users.length === 0) {
             axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
                 this.props.setUsers(response.data.items)
             })
         }
     }
+
     render() {
-        return <div >
+        return <div>
             <button onClick={this.getUsers}>Get Users</button>
             {
                 this.props.users.map(u => <div key={u.id}>
                 <span>
-                    <div >
-                        <img src={u.photos.small != null ? u.photos.small : userPhoto}  className={s.photo}/>
+                    <div>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.photo}/>
                     </div>
                     <div>
-                        {u.followed ? <button onClick={() => {this.props.unfollow(u.id)}}>Follow</button>
-                            : <button onClick={()=>{ this.props.follow(u.id) }}>Unfollow</button>}
+                        {u.followed ? <button onClick={() => {
+                                this.props.unfollow(u.id)
+                            }}>Follow</button>
+                            : <button onClick={() => {
+                                this.props.follow(u.id)
+                            }}>Unfollow</button>}
 
                     </div>
                 </span>

@@ -22,6 +22,14 @@ export type UserType={
 }
 export type ISType = {
     users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+}
+
+export type setUsersTotalCounterACType = {
+    type: 'SET_TOTAL_USERS_COUNT'
+    totalCount: number
 }
 export type followACType = {
     type: 'FOLLOW',
@@ -35,11 +43,17 @@ export type setUsersACType = {
     type: 'SET_USERS',
     users: any
 }
+export type currentPageACType = {
+    type: 'SET_CURRENT_PAGE',
+    currentPage: number
+}
+
 
 let initialState:ISType = {
-    users: [
-
-    ],
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 20,
+    currentPage: 1
 }
 
 const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType => {
@@ -70,7 +84,20 @@ const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType =
         case 'SET_USERS': {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
+            }
+        }
+        case 'SET_CURRENT_PAGE': {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
+
+        case 'SET_TOTAL_USERS_COUNT': {
+            return  {
+                ...state,
+                totalUsersCount: action.totalCount
             }
         }
 
@@ -82,6 +109,10 @@ const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType =
 export const followAC = (userId: number) => ({type: 'FOLLOW', userId})
 export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW', userId})
 export const setUsersAC = (users: any) => ({type: 'SET_USERS', users})
+export const currentPageAC = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage})
+export const setUsersTotalCounterAC = (totalCount: number) => ({type: 'SET_TOTAL_USERS_COUNT', totalCount})
+
+
 
 
 export default UsersReducer

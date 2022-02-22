@@ -4,7 +4,7 @@ import {
     currentPageACType,
     followACType,
     setUsersACType,
-    setUsersTotalCounterACType,
+    setUsersTotalCounterACType, toggleIsFetchingACType,
     unfollowACType
 } from "./UsersReducer";
 
@@ -46,6 +46,7 @@ export type ActionsType =
     | setUsersACType
     | currentPageACType
     | setUsersTotalCounterACType
+    | toggleIsFetchingACType
 
 export type StoreType = {
     _state: StateType

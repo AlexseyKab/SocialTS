@@ -14,8 +14,12 @@ type UsersTSXprops = {
 }
 
 const UsersJSX = (props: UsersTSXprops) => {
+    console.log(props.totalUsersCount)
+    console.log(props.pageSize)
 
     let pageCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    console.log(pageCount)
+    console.log("Test")
 
     let pages = []
     for (let i = 1; i <= pageCount; i++) {

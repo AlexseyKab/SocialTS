@@ -4,12 +4,13 @@ import SuperDialogsContainer from "./Myposts/SuperDialogsContainer";
 
 
 type ProfilePropsType = {
+    profile: any
 }
 const Profile = (props: ProfilePropsType) => {
 
     return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             <SuperDialogsContainer/>
         </div>
     )

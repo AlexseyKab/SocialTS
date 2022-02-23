@@ -1,8 +1,27 @@
 import {ActionsType, PostDataType, ProfilePageType} from "./State";
 
+export type profileType = {
+    aboutMe: string
+    contacts: profileContactsType
+    lookingForAJobDescription: string
+    photos: photosType
+}
+
+type photosType ={
+    small: string
+    large: string
+}
+
+type profileContactsType = {
+    facebook: string
+    vk: string
+    github: string
+
+}
+
 export type setUserProfileType = {
     type: 'SET_USERS_PROFILE',
-    profile: string
+    profile: profileType
 }
 
 let initializationState = {
@@ -46,8 +65,7 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
            return state
    }
 }
-export const setUserProfile = (profile: any): setUserProfileType => ({type: 'SET_USERS_PROFILE', profile})
-
+export const setUserProfile = (profile: profileType): setUserProfileType => ({type: 'SET_USERS_PROFILE', profile: profile})
 
 
 export {ProfileReducer}

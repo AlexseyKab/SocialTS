@@ -1,5 +1,10 @@
 import {ActionsType, PostDataType, ProfilePageType} from "./State";
 
+export type setUserProfileType = {
+    type: 'SET_USERS_PROFILE',
+    profile: string
+}
+
 let initializationState = {
     postData: [
         {id: 1, message: "Hi, how are you?", value: 10},
@@ -7,11 +12,47 @@ let initializationState = {
         {id: 3, message: "Yo it-incubator", value: 10},
         {id: 4, message: "Yo", value: 17},
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
 }
 
 const ProfileReducer = (state: ProfilePageType = initializationState, action: ActionsType): ProfilePageType => {
-    if (action.type === 'ADD-POST') {
+   switch (action.type) {
+       case 'ADD-POST': {
+           let newPost: PostDataType  = {
+               id: 5,
+               message: state.newPostText,
+               value: 0
+           }
+           return {
+               ...state,
+               postData: state.postData.concat(newPost),
+               newPostText: ''
+           }
+       }
+       case 'UPDATE-NEW-POST-TEXT': {
+           return {
+               ...state,
+               newPostText: action.newPostText
+           }
+       }
+       case 'SET_USERS_PROFILE': {
+           return {
+               ...state,
+               profile: action.profile
+           }
+       }
+       default:
+           return state
+   }
+}
+export const setUserProfile = (profile: any): setUserProfileType => ({type: 'SET_USERS_PROFILE', profile})
+
+
+
+export {ProfileReducer}
+
+/* if (action.type === 'ADD-POST') {
         let newPost: PostDataType = {
             id: 5,
             message: action.postText,
@@ -22,8 +63,7 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
             postData: state.postData.concat(newPost),
             newPostText: ''
         }
-        //this._state.profilePage.postData.push(newPost)
-        //this._rerenderEntireTree(this._state);
+
     } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
         return {
             ...state,
@@ -32,9 +72,4 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
         }
         //this._state.profilePage.newPostText = action.newPostText
         //this._rerenderEntireTree(this._state);
-    }return state
-}
-
-export {
-    ProfileReducer
-}
+    }return state*/

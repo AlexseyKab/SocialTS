@@ -1,6 +1,5 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {AddPostActiveType, PostDataType, UpdatePostType} from "../../Redux/State";
 import SuperDialogsContainer from "./Myposts/SuperDialogsContainer";
 
 

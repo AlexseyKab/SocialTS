@@ -1,4 +1,4 @@
-import {ProfileReducer} from "./ProfileReducer";
+import {ProfileReducer, setUserProfileType} from "./ProfileReducer";
 import {DialogsReducer} from "./DialogsReducer";
 import {
     currentPageACType,
@@ -20,6 +20,7 @@ export type PostDataType = {
 export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
+    profile: any
 }
 export type DialogsType = {
     id: number
@@ -47,6 +48,7 @@ export type ActionsType =
     | currentPageACType
     | setUsersTotalCounterACType
     | toggleIsFetchingACType
+    | setUserProfileType
 
 export type StoreType = {
     _state: StateType
@@ -109,7 +111,6 @@ export const store: any = {
         this._rerenderEntireTree = callback
     },
     _rerenderEntireTree(_state: StateType) {
-        console.log('Rerender')
     },
     getState() {
         return this._state
@@ -148,7 +149,6 @@ export const addPostAC = (postText: string): AddPostActiveType => {
         postText: postText
     }
 }
-
 export const onPostChangeAC = (newPostText: string): UpdatePostType => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
@@ -161,7 +161,6 @@ export const sendMessageAC = (value: string): SendMessageType => {
         value: value
     }
 }
-
 export const updateNewMessageBodyAC = (text: string): UpdateMessageType => {
     return {
         type: 'UPDATE-NEW-MESSAGE-BODY',

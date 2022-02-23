@@ -2,6 +2,7 @@ import React from "react";
 import s from "./user.module.css";
 import userPhoto from "../../assets/images/thumb-1920-288376.jpg";
 import {UserType} from "../../Redux/UsersReducer";
+import { NavLink } from "react-router-dom";
 
 type UsersTSXprops = {
     users: UserType[]
@@ -35,7 +36,9 @@ const UsersJSX = (props: UsersTSXprops) => {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.photo}/>
+                        <NavLink to={'./profile/' + u.id}>
+                             <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.photo}/>
+                        </NavLink>
                     </div>
                     <div>
                         {u.followed ? <button onClick={() => {

@@ -16,20 +16,37 @@ import UsersJSX from "./UsersJSX";
 import Preloader from "../common/Preloader/Preloader";
 
 type UsersType = {
-    follow: (userId: number) => void
-    setUsers: (users: any) => void
-    unfollow: (userId: number) => void
     users: UserType[]
     pageSize: number,
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    setUsers: (users: any) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
-    isFetching: boolean
     toggleIsFetching: (isFetching: boolean) => void
 
-
 }
+
+type mapStateToPropsType = {
+    users: UserType[]
+    pageSize: number,
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+}
+type mapDispatchToPropsType = {
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    setUsers: (users: any) => void
+    setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (totalCount: number) => void
+    toggleIsFetching: (isFetching: boolean) => void
+}
+
+
 
 class UsersAPI extends React.Component<UsersType> {
     componentDidMount() {

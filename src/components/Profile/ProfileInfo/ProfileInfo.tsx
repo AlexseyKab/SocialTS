@@ -25,7 +25,6 @@ const ProfileInfo = (props: ProfileInfoType) => {
                 <div>{props.profile.contacts.github}</div>
                 <div>{props.profile.contacts.facebook}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
-                ava + descproption
             </div>
         </div>
     )

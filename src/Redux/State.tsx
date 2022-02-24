@@ -7,6 +7,7 @@ import {
     setUsersTotalCounterACType, toggleIsFetchingACType,
     unfollowACType
 } from "./UsersReducer";
+import {setUsersDataType} from "./authReducer";
 
 export type MessageType = {
     message: string
@@ -49,6 +50,7 @@ export type ActionsType =
     | setUsersTotalCounterACType
     | toggleIsFetchingACType
     | setUserProfileType
+    | setUsersDataType
 
 export type StoreType = {
     _state: StateType

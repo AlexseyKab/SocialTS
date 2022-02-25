@@ -51,21 +51,19 @@ type mapDispatchToPropsType = {
 class UsersAPI extends React.Component<UsersType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        getUsers(this.props.currentPage, this.props.pageSize).then(response => {
+        getUsers(this.props.currentPage, this.props.pageSize).then(data=> {
             this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data.items)
-            this.props.setTotalUsersCount(response.data.totalCount)
+            this.props.setUsers(data.items)
+            this.props.setTotalUsersCount(data.totalCount)
         })
     }
 
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPage(currentPage)
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true,
-        }).then(response => {
+        getUsers(currentPage, this.props.pageSize).then(data => {
             this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data.items)
+            this.props.setUsers(data.items)
         })
     }
 

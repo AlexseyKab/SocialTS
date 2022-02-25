@@ -14,7 +14,7 @@ import axios from "axios";
 import UsersJSX from "./UsersJSX";
 
 import Preloader from "../common/Preloader/Preloader";
-import getUsers from "../../API/API-TS";
+import {getUsers} from "../../API/API-TS";
 
 type UsersType = {
     users: UserType[]

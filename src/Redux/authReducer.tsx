@@ -48,7 +48,6 @@ let initialState: ISType = {
 const authReducer = (state: ISType = initialState, action: ActionsType): ISType => {
     switch (action.type) {
         case 'SET_USERS_DATA': {
-            debugger
             return {
                 ...state,
                  data: {...action.data},

@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Dispatch} from "redux";
 import {dataType, setUsersDataAC} from "../../Redux/authReducer";
+import {getAutMe} from "../../API/API-TS";
 
 type HeaderProps = {
     setUsersDataAC: (data: dataType) => void
@@ -14,10 +15,10 @@ type HeaderProps = {
 
 class HeaderContainer extends React.Component<HeaderProps> {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true}).then(response => {
+        getAutMe().then(data => {
 
-            if (response.data.resultCode === 0) {
-                this.props.setUsersDataAC(response.data.data)
+            if (data.resultCode === 0) {
+                this.props.setUsersDataAC(data.data)
             }
         })
     }

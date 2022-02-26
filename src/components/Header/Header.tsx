@@ -8,7 +8,6 @@ type HeaderType = {
 }
 
 const Header = (props: HeaderType) => {
-    debugger
     return (
         <header className={s.header}>
             <img src="https://wallpaperforu.com/wp-content/uploads/2020/08/vector-wallpaper-200827150908131024x768.jpg" alt="logo"/>

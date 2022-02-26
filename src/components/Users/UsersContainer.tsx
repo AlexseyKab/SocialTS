@@ -4,17 +4,17 @@ import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Dispatch} from "redux";
 import {
     currentPageAC,
-    followAC,
+    followAC, followingProgress,
     setUsersAC,
     setUsersTotalCounterAC, toggleIsFetchingAC,
     unfollowAC,
     UserType
 } from "../../Redux/UsersReducer";
-import axios from "axios";
 import UsersJSX from "./UsersJSX";
 
 import Preloader from "../common/Preloader/Preloader";
-import {getUsers} from "../../API/API-TS";
+import {globalAPI} from "../../API/API-TS";
+
 
 type UsersType = {
     users: UserType[]
@@ -28,6 +28,7 @@ type UsersType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+
 
 }
 
@@ -51,7 +52,7 @@ type mapDispatchToPropsType = {
 class UsersAPI extends React.Component<UsersType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        getUsers(this.props.currentPage, this.props.pageSize).then(data=> {
+        globalAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data=> {
             this.props.toggleIsFetching(false)
             this.props.setUsers(data.items)
             this.props.setTotalUsersCount(data.totalCount)
@@ -61,7 +62,7 @@ class UsersAPI extends React.Component<UsersType> {
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPage(currentPage)
         this.props.toggleIsFetching(true)
-        getUsers(currentPage, this.props.pageSize).then(data => {
+        globalAPI.getUsers(currentPage, this.props.pageSize).then(data => {
             this.props.toggleIsFetching(false)
             this.props.setUsers(data.items)
         })
@@ -79,6 +80,7 @@ class UsersAPI extends React.Component<UsersType> {
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
                 onPageChanged={this.onPageChanged}
+
                 /*isFetching={this.props.isFetching}*/
             />
         </>
@@ -91,7 +93,9 @@ let mapStateToProps = (state: AppRootStateType) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+
+
     }
 }
 
@@ -114,6 +118,9 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
         },
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
+        },
+        followingProgress: (following: boolean) => {
+            dispatch(followingProgress(following))
         }
     }
 }

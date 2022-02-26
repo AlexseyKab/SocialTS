@@ -26,6 +26,11 @@ export type ISType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    following: boolean
+}
+export type followingProgressType = {
+    type: 'TOGGLE_IS_FOLLOWED',
+    isFetching: boolean
 }
 export type toggleIsFetchingACType = {
     type: 'TOGGLE_IS_FETCHING'
@@ -58,7 +63,8 @@ let initialState:ISType = {
     pageSize: 5,
     totalUsersCount: 20,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    following: false
 }
 
 const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType => {
@@ -113,11 +119,19 @@ const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType =
             }
         }
 
+        case 'TOGGLE_IS_FOLLOWED': {
+            return {
+                ...state,
+                following: action.isFetching
+            }
+        }
+
         default:
             return state
     }
 }
 
+export const followingProgress = (isFetching: boolean): followingProgressType => ({type: 'TOGGLE_IS_FOLLOWED', isFetching})
 export const followAC = (userId: number) => ({type: 'FOLLOW', userId})
 export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW', userId})
 export const setUsersAC = (users: any) => ({type: 'SET_USERS', users})

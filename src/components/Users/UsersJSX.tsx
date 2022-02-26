@@ -3,8 +3,7 @@ import s from "./user.module.css";
 import userPhoto from "../../assets/images/thumb-1920-288376.jpg";
 import {UserType} from "../../Redux/UsersReducer";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import {detFollow, getUnfollow} from "../../API/API-TS";
+import {globalAPI} from "../../API/API-TS";
 
 type UsersTSXprops = {
     users: UserType[]
@@ -44,8 +43,9 @@ const UsersJSX = (props: UsersTSXprops) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button onClick={() => {
-                                getUnfollow(u.id).then(data => {
+                            ? <button   onClick={() => {
+
+                                globalAPI.getUnfollow(u.id).then(data => {
                                    if (data.resultCode === 0) {
                                        props.unfollow(u.id)
                                    }
@@ -53,8 +53,9 @@ const UsersJSX = (props: UsersTSXprops) => {
 
 
                             }}>Unfollow</button>
-                            : <button onClick={() => {
-                                detFollow(u.id).then(data=> {
+                            : <button  onClick={() => {
+
+                                globalAPI.detFollow(u.id).then(data=> {
                                     if (data.resultCode === 0) {
                                         props.follow(u.id)
                                     }

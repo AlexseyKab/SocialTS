@@ -2,7 +2,7 @@ import {ProfileReducer, setUserProfileType} from "./ProfileReducer";
 import {DialogsReducer} from "./DialogsReducer";
 import {
     currentPageACType,
-    followACType,
+    followACType, followingProgressType,
     setUsersACType,
     setUsersTotalCounterACType, toggleIsFetchingACType,
     unfollowACType
@@ -51,6 +51,7 @@ export type ActionsType =
     | toggleIsFetchingACType
     | setUserProfileType
     | setUsersDataType
+    | followingProgressType
 
 export type StoreType = {
     _state: StateType

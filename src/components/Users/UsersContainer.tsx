@@ -4,9 +4,9 @@ import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Dispatch} from "redux";
 import {
     currentPageAC,
-    followAC, followingProgress,
+    followAC,
     setUsersAC,
-    setUsersTotalCounterAC, toggleIsFetchingAC,
+    setUsersTotalCounterAC, toggleFollowProgress, toggleIsFetchingAC,
     unfollowAC,
     UserType
 } from "../../Redux/UsersReducer";
@@ -28,7 +28,8 @@ type UsersType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-
+    toggleFollowProgress: (isFetching: boolean) => void
+    following: boolean
 
 }
 
@@ -80,7 +81,8 @@ class UsersAPI extends React.Component<UsersType> {
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
                 onPageChanged={this.onPageChanged}
-
+                toggleFollowProgress={this.props.toggleFollowProgress}
+                following={this.props.following}
                 /*isFetching={this.props.isFetching}*/
             />
         </>
@@ -94,7 +96,7 @@ let mapStateToProps = (state: AppRootStateType) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-
+        following: state.usersPage.following
 
     }
 }
@@ -119,8 +121,8 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
         },
-        followingProgress: (following: boolean) => {
-            dispatch(followingProgress(following))
+        toggleFollowProgress: (following: boolean) => {
+            dispatch(toggleFollowProgress(following))
         }
     }
 }

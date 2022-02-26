@@ -131,7 +131,7 @@ const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType =
     }
 }
 
-export const followingProgress = (isFetching: boolean): followingProgressType => ({type: 'TOGGLE_IS_FOLLOWED', isFetching})
+export const toggleFollowProgress = (isFetching: boolean): followingProgressType => ({type: 'TOGGLE_IS_FOLLOWED', isFetching})
 export const followAC = (userId: number) => ({type: 'FOLLOW', userId})
 export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW', userId})
 export const setUsersAC = (users: any) => ({type: 'SET_USERS', users})

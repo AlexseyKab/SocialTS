@@ -13,7 +13,8 @@ type UsersTSXprops = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     onPageChanged: (currentPage: number) => void
-
+    toggleFollowProgress: (isFetching: boolean) => void
+    following: boolean
 }
 
 const UsersJSX = (props: UsersTSXprops) => {
@@ -43,22 +44,26 @@ const UsersJSX = (props: UsersTSXprops) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button   onClick={() => {
+                            ? <button disabled={props.following}  onClick={() => {
 
+                                props.toggleFollowProgress(true)
                                 globalAPI.getUnfollow(u.id).then(data => {
                                    if (data.resultCode === 0) {
                                        props.unfollow(u.id)
                                    }
+                                    props.toggleFollowProgress(false)
                                 })
 
 
                             }}>Unfollow</button>
-                            : <button  onClick={() => {
+                            : <button disabled={props.following} onClick={() => {
 
+                                props.toggleFollowProgress(true)
                                 globalAPI.detFollow(u.id).then(data=> {
                                     if (data.resultCode === 0) {
                                         props.follow(u.id)
                                     }
+                                    props.toggleFollowProgress(false)
                                 })
 
                             }}>Follow</button>}

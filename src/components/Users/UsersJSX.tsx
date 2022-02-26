@@ -13,8 +13,8 @@ type UsersTSXprops = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     onPageChanged: (currentPage: number) => void
-    toggleFollowProgress: (isFetching: boolean) => void
-    following: boolean
+    toggleFollowProgress: (isFetching: boolean, userId: number) => void
+    following: Array<number>
 }
 
 const UsersJSX = (props: UsersTSXprops) => {
@@ -44,26 +44,26 @@ const UsersJSX = (props: UsersTSXprops) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button disabled={props.following}  onClick={() => {
+                            ? <button disabled={props.following.some(id => id === u.id)}  onClick={() => {
 
-                                props.toggleFollowProgress(true)
+                                props.toggleFollowProgress(true, u.id)
                                 globalAPI.getUnfollow(u.id).then(data => {
                                    if (data.resultCode === 0) {
                                        props.unfollow(u.id)
                                    }
-                                    props.toggleFollowProgress(false)
+                                    props.toggleFollowProgress(false, u.id)
                                 })
 
 
                             }}>Unfollow</button>
-                            : <button disabled={props.following} onClick={() => {
+                            : <button disabled={props.following.some(id => id === u.id)} onClick={() => {
 
-                                props.toggleFollowProgress(true)
+                                props.toggleFollowProgress(true, u.id)
                                 globalAPI.detFollow(u.id).then(data=> {
                                     if (data.resultCode === 0) {
                                         props.follow(u.id)
                                     }
-                                    props.toggleFollowProgress(false)
+                                    props.toggleFollowProgress(false, u.id)
                                 })
 
                             }}>Follow</button>}

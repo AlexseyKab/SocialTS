@@ -28,8 +28,8 @@ type UsersType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowProgress: (isFetching: boolean) => void
-    following: boolean
+    toggleFollowProgress: (isFetching: boolean, userId: number) => void
+    following: Array<number>
 
 }
 
@@ -121,8 +121,8 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
         },
-        toggleFollowProgress: (following: boolean) => {
-            dispatch(toggleFollowProgress(following))
+        toggleFollowProgress: (following: boolean, userId: number) => {
+            dispatch(toggleFollowProgress(following, userId))
         }
     }
 }

@@ -83,6 +83,7 @@ class UsersAPI extends React.Component<UsersType> {
                 onPageChanged={this.onPageChanged}
                 toggleFollowProgress={this.props.toggleFollowProgress}
                 following={this.props.following}
+
             />
         </>
     }

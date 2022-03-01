@@ -1,5 +1,7 @@
 import React from "react";
 import {ActionsType} from "./State";
+import {Dispatch} from "redux";
+import {globalAPI} from "../API/API-TS";
 
 type LocalType = {
     city: string,
@@ -139,10 +141,24 @@ const UsersReducer = (state:ISType = initialState, action: ActionsType):ISType =
 export const toggleFollowProgress = (isFetching: boolean, userId: number): followingProgressType => ({type: 'TOGGLE_IS_FOLLOWED', isFetching, userId})
 export const followAC = (userId: number): followACType => ({type: 'FOLLOW', userId})
 export const unfollowAC = (userId: number):unfollowACType => ({type: 'UNFOLLOW', userId})
-export const setUsersAC = (users: any): setUsersACType => ({type: 'SET_USERS', users})
+export const setUsers = (users: any): setUsersACType => ({type: 'SET_USERS', users})
 export const currentPageAC = (currentPage: number): currentPageACType => ({type: 'SET_CURRENT_PAGE', currentPage})
-export const setUsersTotalCounterAC = (totalCount: number): setUsersTotalCounterACType => ({type: 'SET_TOTAL_USERS_COUNT', totalCount})
-export const toggleIsFetchingAC = (isFetching: boolean): toggleIsFetchingACType => ({type: 'TOGGLE_IS_FETCHING', isFetching})
+export const setTotalUsersCount = (totalCount: number): setUsersTotalCounterACType => ({type: 'SET_TOTAL_USERS_COUNT', totalCount})
+export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingACType => ({type: 'TOGGLE_IS_FETCHING', isFetching})
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFetching(true))
+
+        globalAPI.getUsers(currentPage, pageSize).then(data=> {
+            dispatch( toggleIsFetching(false))
+            dispatch( setUsers(data.items))
+            dispatch( setTotalUsersCount(data.totalCount))
+        })
+    }
+}
+
 
 
 

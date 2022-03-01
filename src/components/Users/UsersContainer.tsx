@@ -1,19 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Dispatch} from "redux";
+import {Action, Dispatch} from "redux";
 import {
     currentPageAC,
     followAC,
-    setUsersAC,
-    setUsersTotalCounterAC, toggleFollowProgress, toggleIsFetchingAC,
+    setUsers,
+    setTotalUsersCount, toggleFollowProgress, toggleIsFetching,
     unfollowAC,
-    UserType
+    UserType, getUsersThunkCreator
 } from "../../Redux/UsersReducer";
 import UsersJSX from "./UsersJSX";
 
 import Preloader from "../common/Preloader/Preloader";
 import {globalAPI} from "../../API/API-TS";
+import {ThunkDispatch} from "redux-thunk";
 
 
 type UsersType = {
@@ -30,6 +31,7 @@ type UsersType = {
     toggleIsFetching: (isFetching: boolean) => void
     toggleFollowProgress: (isFetching: boolean, userId: number) => void
     following: Array<number>
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 
 }
 
@@ -52,12 +54,7 @@ type mapDispatchToPropsType = {
 
 class UsersAPI extends React.Component<UsersType> {
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        globalAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data=> {
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(data.items)
-            this.props.setTotalUsersCount(data.totalCount)
-        })
+      this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (currentPage: number) => {
@@ -101,7 +98,7 @@ let mapStateToProps = (state: AppRootStateType) => {
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch) => {
+let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action>) => {
     return {
         follow: (userId: number) => {
             dispatch(followAC(userId))
@@ -110,19 +107,22 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(unfollowAC(userId))
         },
         setUsers: (users: any) => {
-            dispatch(setUsersAC(users))
+            dispatch(setUsers(users))
         },
         setCurrentPage: (currentPage: number) => {
             dispatch(currentPageAC(currentPage))
         },
         setTotalUsersCount: (totalCount: number) => {
-            dispatch(setUsersTotalCounterAC(totalCount))
+            dispatch(setTotalUsersCount(totalCount))
         },
         toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetchingAC(isFetching))
+            dispatch(toggleIsFetching(isFetching))
         },
         toggleFollowProgress: (following: boolean, userId: number) => {
             dispatch(toggleFollowProgress(following, userId))
+        },
+        getUsersThunkCreator: (currentPage: number, pageSize: number) => {
+            dispatch(getUsersThunkCreator(currentPage, pageSize))
         }
     }
 }

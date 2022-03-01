@@ -1,20 +1,19 @@
 import React from "react";
 import s from "./user.module.css";
 import userPhoto from "../../assets/images/thumb-1920-288376.jpg";
-import {UserType} from "../../Redux/UsersReducer";
+import {followThunkCreator, unfollowThunkCreator, UserType} from "../../Redux/UsersReducer";
 import { NavLink } from "react-router-dom";
 import {globalAPI} from "../../API/API-TS";
 
 type UsersTSXprops = {
     users: UserType[]
-    currentPage: number
     totalUsersCount: number
     pageSize: number
-    unfollow: (userId: number) => void
-    follow: (userId: number) => void
+    currentPage: number
     onPageChanged: (currentPage: number) => void
-    toggleFollowProgress: (isFetching: boolean, userId: number) => void
     following: Array<number>
+    unfollowThunkCreator: (userId: number) => void
+    followThunkCreator: (userId: number) => void
 }
 
 const UsersJSX = (props: UsersTSXprops) => {
@@ -44,29 +43,15 @@ const UsersJSX = (props: UsersTSXprops) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button disabled={props.following.some(id => id === u.id)}  onClick={() => {
+                            ? <button disabled={props.following.some(id => id === u.id)}  onClick={() =>
 
-                                props.toggleFollowProgress(true, u.id)
-                                globalAPI.getUnfollow(u.id).then(data => {
-                                   if (data.resultCode === 0) {
-                                       props.unfollow(u.id)
-                                   }
-                                    props.toggleFollowProgress(false, u.id)
-                                })
+                            {props.unfollowThunkCreator( u.id)}}>Unfollow</button>
 
-
-                            }}>Unfollow</button>
                             : <button disabled={props.following.some(id => id === u.id)} onClick={() => {
 
-                                props.toggleFollowProgress(true, u.id)
-                                globalAPI.detFollow(u.id).then(data=> {
-                                    if (data.resultCode === 0) {
-                                        props.follow(u.id)
-                                    }
-                                    props.toggleFollowProgress(false, u.id)
-                                })
+                                {props.followThunkCreator( u.id)
 
-                            }}>Follow</button>}
+                            }}}>Follow</button>}
 
                     </div>
                 </span>
@@ -86,3 +71,11 @@ const UsersJSX = (props: UsersTSXprops) => {
 }
 
 export default UsersJSX
+/*    currentPage: number
+    totalUsersCount: number
+    pageSize: number
+    users: UserType[]
+    onPageChanged: (currentPage: number) => void
+    following: Array<number>
+    unfollowThunkCreator: (userId: number) => void
+    followThunkCreator: (userId: number) => void*/

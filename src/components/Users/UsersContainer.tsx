@@ -2,7 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Action} from "redux";
-import {currentPageAC, followAC, toggleFollowProgress, unfollowAC, UserType, getUsersThunkCreator} from "../../Redux/UsersReducer";
+import {
+    currentPageAC,
+    followThunkCreator,
+    getUsersThunkCreator,
+    unfollowThunkCreator,
+    UserType
+} from "../../Redux/UsersReducer";
 import UsersJSX from "./UsersJSX";
 import Preloader from "../common/Preloader/Preloader";
 import {ThunkDispatch} from "redux-thunk";
@@ -10,16 +16,18 @@ import {ThunkDispatch} from "redux-thunk";
 
 type UsersType = {
     users: UserType[]
-    pageSize: number,
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setCurrentPage: (currentPage: number) => void
-    toggleFollowProgress: (isFetching: boolean, userId: number) => void
-    following: Array<number>
     getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    currentPage: number
+    setCurrentPage: (currentPage: number) => void
+    pageSize: number
+    isFetching: boolean
+    totalUsersCount: number
+    following: Array<number>
+    unfollowThunkCreator: (userId: number) => void
+    followThunkCreator: (userId: number) => void
+}
+
+type typeDispatchToProps = {
 
 }
 
@@ -38,16 +46,14 @@ class UsersAPI extends React.Component<UsersType> {
         return <>
             {this.props.isFetching ? <Preloader/> : null}
             <UsersJSX
-                totalUsersCount={this.props.totalUsersCount}
                 users={this.props.users}
-                currentPage={this.props.currentPage}
+                totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
-                unfollow={this.props.unfollow}
-                follow={this.props.follow}
+                currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
-                toggleFollowProgress={this.props.toggleFollowProgress}
                 following={this.props.following}
-
+                unfollowThunkCreator={this.props.unfollowThunkCreator}
+                followThunkCreator={this.props.followThunkCreator}
             />
         </>
     }
@@ -65,26 +71,43 @@ let mapStateToProps = (state: AppRootStateType) => {
     }
 }
 
+
 let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action>) => {
     return {
-        follow: (userId: number) => {
-            dispatch(followAC(userId))
-        },
-        unfollow: (userId: number) => {
-            dispatch(unfollowAC(userId))
-        },
-
         setCurrentPage: (currentPage: number) => {
             dispatch(currentPageAC(currentPage))
         },
 
-        toggleFollowProgress: (following: boolean, userId: number) => {
-            dispatch(toggleFollowProgress(following, userId))
-        },
         getUsersThunkCreator: (currentPage: number, pageSize: number) => {
             dispatch(getUsersThunkCreator(currentPage, pageSize))
-        }
+        },
+        unfollowThunkCreator: (userId: number) => {
+            dispatch(unfollowThunkCreator(userId))
+        },
+        followThunkCreator: (userId: number) => {
+            dispatch(followThunkCreator(userId))
+        },
+
+
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersAPI)
+/*  pageSize: number,
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    setCurrentPage: (currentPage: number) => void
+    following: Array<number>
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    unfollowThunkCreator: (userId: number) => void
+    followThunkCreator: (userId: number) => void*/
+
+/* totalUsersCount={this.props.totalUsersCount}
+                users={this.props.users}
+                currentPage={this.props.currentPage}
+                pageSize={this.props.pageSize}
+                onPageChanged={this.onPageChanged}
+                following={this.props.following}
+                unfollowThunkCreator={this.props.unfollowThunkCreator}
+                followThunkCreator={this.props.followThunkCreator}*/

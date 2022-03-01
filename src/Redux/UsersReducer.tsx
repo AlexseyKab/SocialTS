@@ -148,13 +148,34 @@ export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingACType =>
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
     return (dispatch: Dispatch) => {
-
         dispatch(toggleIsFetching(true))
-
         globalAPI.getUsers(currentPage, pageSize).then(data=> {
             dispatch( toggleIsFetching(false))
             dispatch( setUsers(data.items))
             dispatch( setTotalUsersCount(data.totalCount))
+        })
+    }
+}
+
+export const followThunkCreator = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleFollowProgress(true, userId))
+        globalAPI.detFollow(userId).then(data=> {
+            if (data.resultCode === 0) {
+                dispatch(followAC(userId))
+            }
+            dispatch(toggleFollowProgress(false, userId))
+        })
+    }
+}
+export const unfollowThunkCreator = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleFollowProgress(true, userId))
+        globalAPI.getUnfollow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unfollowAC(userId))
+            }
+            dispatch(toggleFollowProgress(false, userId))
         })
     }
 }

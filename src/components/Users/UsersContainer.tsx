@@ -1,19 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Action, Dispatch} from "redux";
-import {
-    currentPageAC,
-    followAC,
-    setUsers,
-    setTotalUsersCount, toggleFollowProgress, toggleIsFetching,
-    unfollowAC,
-    UserType, getUsersThunkCreator
-} from "../../Redux/UsersReducer";
+import {Action} from "redux";
+import {currentPageAC, followAC, toggleFollowProgress, unfollowAC, UserType, getUsersThunkCreator} from "../../Redux/UsersReducer";
 import UsersJSX from "./UsersJSX";
-
 import Preloader from "../common/Preloader/Preloader";
-import {globalAPI} from "../../API/API-TS";
 import {ThunkDispatch} from "redux-thunk";
 
 
@@ -25,32 +16,12 @@ type UsersType = {
     isFetching: boolean
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setUsers: (users: any) => void
     setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
     toggleFollowProgress: (isFetching: boolean, userId: number) => void
     following: Array<number>
     getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 
 }
-
-type mapStateToPropsType = {
-    users: UserType[]
-    pageSize: number,
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-}
-type mapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setUsers: (users: any) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
-}
-
 
 class UsersAPI extends React.Component<UsersType> {
     componentDidMount() {
@@ -102,18 +73,11 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
         unfollow: (userId: number) => {
             dispatch(unfollowAC(userId))
         },
-        setUsers: (users: any) => {
-            dispatch(setUsers(users))
-        },
+
         setCurrentPage: (currentPage: number) => {
             dispatch(currentPageAC(currentPage))
         },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setTotalUsersCount(totalCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetching(isFetching))
-        },
+
         toggleFollowProgress: (following: boolean, userId: number) => {
             dispatch(toggleFollowProgress(following, userId))
         },

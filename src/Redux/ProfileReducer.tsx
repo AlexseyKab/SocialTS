@@ -72,7 +72,7 @@ export const setUserProfile = (profile: profileType): setUserProfileType => ({ty
 export const getProfileThunkCreator = (userId: string) => {
     return (dispatch: Dispatch) => {
         globalAPI.getProfile(userId).then(data => {
-            setUserProfile(data)
+            dispatch(setUserProfile(data))
         })
     }
 }

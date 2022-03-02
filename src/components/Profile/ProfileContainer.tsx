@@ -1,13 +1,11 @@
 import React from "react";
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Dispatch} from "redux";
-import {profileType, setUserProfile} from "../../Redux/ProfileReducer";
+import {Action, Dispatch} from "redux";
+import {getProfileThunkCreator, profileType, setUserProfile} from "../../Redux/ProfileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {globalAPI} from "../../API/API-TS";
-import {followAC, toggleFollowProgress} from "../../Redux/UsersReducer";
+import {ThunkDispatch} from "redux-thunk";
 
 
 type PropsType = mapStateType & mapDispatchPropsType
@@ -15,7 +13,7 @@ type PropsType = mapStateType & mapDispatchPropsType
 type ProfilePropsType = RouteComponentProps<PasParamType> & PropsType
 
 type mapDispatchPropsType = {
-    setUserProfile: (profile: profileType) => void
+    getProfileThunkCreator: (userId: string) => void
 }
 type mapStateType = {
     profile: profileType
@@ -23,6 +21,7 @@ type mapStateType = {
 
 type PasParamType = {
     userId: string
+
 }
 
 class ProfileContainer extends React.Component<ProfilePropsType>{
@@ -32,9 +31,7 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
         if (!userId) {
             userId = '2'
         }
-        globalAPI.getProfile(userId).then(data => {
-            this.props.setUserProfile(data)
-        })
+        this.props.getProfileThunkCreator(userId)
     }
 
     render() {
@@ -55,10 +52,11 @@ let mapStateToProps = (state: AppRootStateType): mapStateType => {
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
+let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action>): mapDispatchPropsType => {
     return {
-        setUserProfile: (profile: profileType) => {
-            dispatch(setUserProfile(profile))
+
+        getProfileThunkCreator: (userId: string) => {
+            dispatch(getProfileThunkCreator(userId))
         },
     }
 

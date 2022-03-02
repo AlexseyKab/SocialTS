@@ -1,26 +1,22 @@
 import React from "react";
 import Header from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Dispatch} from "redux";
-import {dataType, setUsersDataAC} from "../../Redux/authReducer";
-import {globalAPI} from "../../API/API-TS";
+import {Action} from "redux";
+import {getAutThunk} from "../../Redux/authReducer";
+import {ThunkDispatch} from "redux-thunk";
+
 
 type HeaderProps = {
-    setUsersDataAC: (data: dataType) => void
     isAuth: boolean
     login: string | null
+    getAutThunk: () => void
 }
 
 class HeaderContainer extends React.Component<HeaderProps> {
     componentDidMount() {
-        globalAPI.getAutMe().then(data => {
 
-            if (data.resultCode === 0) {
-                this.props.setUsersDataAC(data.data)
-            }
-        })
+       this.props.getAutThunk()
     }
 
     render() {
@@ -42,12 +38,14 @@ let mapStateToProps = (state: AppRootStateType) => {
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch) => {
+let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action>) => {
     return {
-        setUsersDataAC: (data: dataType) => {
-            dispatch(setUsersDataAC(data))
+        getAutThunk: () => {
+            dispatch(getAutThunk())
         }
     }
 }
+
+
 
 export default connect (mapStateToProps, mapDispatchToProps) (HeaderContainer);

@@ -1,5 +1,7 @@
 import React from "react";
 import {ActionsType} from "./State";
+import {Dispatch} from "redux";
+import {globalAPI} from "../API/API-TS";
 
 type LocalType = {
     city: string,
@@ -60,6 +62,17 @@ const authReducer = (state: ISType = initialState, action: ActionsType): ISType 
 }
 
 export const setUsersDataAC = (data: dataType): setUsersDataType => ({type: 'SET_USERS_DATA', data})
+
+export const getAutThunk = () => {
+    return (dispatch: Dispatch) => {
+        globalAPI.getAutMe().then(data => {
+            if (data.resultCode === 0) {
+                dispatch(setUsersDataAC(data.data))
+            }
+        })
+    }
+}
+
 
 export default authReducer
 

@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {sendMessageAC, StateType, updateNewMessageBodyAC} from "../../../Redux/State";
 import {AppRootStateType} from "../../../Redux/Redux-Store";
 import {Dispatch} from "redux";
+import {withAuthRedirect} from "../../../HOC/withAuthRederict";
 
 type MSTType = {
     newMessageBody: string
@@ -37,9 +38,9 @@ let mapDispatchToProps = (dispatch: Dispatch): MDTType => {
     }
 }
 
-const DialogsContaner = connect<MSTType, MDTType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs)
+const DialogsContainer = withAuthRedirect(connect<MSTType, MDTType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs))
 
 
-export default DialogsContaner;
+export default DialogsContainer;
 
 

@@ -27,10 +27,6 @@ type UsersType = {
     followThunkCreator: (userId: number) => void
 }
 
-type typeDispatchToProps = {
-
-}
-
 class UsersAPI extends React.Component<UsersType> {
     componentDidMount() {
       this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
@@ -93,21 +89,3 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersAPI)
-/*  pageSize: number,
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    setCurrentPage: (currentPage: number) => void
-    following: Array<number>
-    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
-    unfollowThunkCreator: (userId: number) => void
-    followThunkCreator: (userId: number) => void*/
-
-/* totalUsersCount={this.props.totalUsersCount}
-                users={this.props.users}
-                currentPage={this.props.currentPage}
-                pageSize={this.props.pageSize}
-                onPageChanged={this.onPageChanged}
-                following={this.props.following}
-                unfollowThunkCreator={this.props.unfollowThunkCreator}
-                followThunkCreator={this.props.followThunkCreator}*/

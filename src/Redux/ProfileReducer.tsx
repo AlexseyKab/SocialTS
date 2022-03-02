@@ -1,4 +1,6 @@
 import {ActionsType, PostDataType, ProfilePageType} from "./State";
+import {Dispatch} from "redux";
+import {globalAPI} from "../API/API-TS";
 
 export type profileType = {
     aboutMe: string
@@ -67,27 +69,13 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
 }
 export const setUserProfile = (profile: profileType): setUserProfileType => ({type: 'SET_USERS_PROFILE', profile: profile})
 
+export const getProfileThunkCreator = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        globalAPI.getProfile(userId).then(data => {
+            setUserProfile(data)
+        })
+    }
+}
 
 export {ProfileReducer}
 
-/* if (action.type === 'ADD-POST') {
-        let newPost: PostDataType = {
-            id: 5,
-            message: action.postText,
-            value: 0
-        }
-        return {
-            ...state,
-            postData: state.postData.concat(newPost),
-            newPostText: ''
-        }
-
-    } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-        return {
-            ...state,
-            newPostText: action.newPostText,
-
-        }
-        //this._state.profilePage.newPostText = action.newPostText
-        //this._rerenderEntireTree(this._state);
-    }return state*/

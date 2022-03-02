@@ -6,6 +6,8 @@ import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Dispatch} from "redux";
 import {profileType, setUserProfile} from "../../Redux/ProfileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {globalAPI} from "../../API/API-TS";
+import {followAC, toggleFollowProgress} from "../../Redux/UsersReducer";
 
 
 type PropsType = mapStateType & mapDispatchPropsType
@@ -30,8 +32,8 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
         if (!userId) {
             userId = '2'
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
-            this.props.setUserProfile(response.data)
+        globalAPI.getProfile(userId).then(data => {
+            this.props.setUserProfile(data)
         })
     }
 
@@ -65,3 +67,4 @@ let mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
 let WithUrlDataComponent = withRouter(ProfileContainer)
 
 export default connect (mapStateToProps, mapDispatchToProps) (WithUrlDataComponent);
+

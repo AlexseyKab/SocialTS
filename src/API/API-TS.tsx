@@ -32,6 +32,12 @@ export const globalAPI = {
             .then(responce => {
                 return responce.data
             })
-    }
+    },
+    getProfile (userId: string) {
+        return instance.get(`profile/` + userId)
+            .then(responce => {
+                return responce.data
+            })
+    },
 }
 

@@ -1,9 +1,8 @@
 import React from "react";
 import s from "./user.module.css";
 import userPhoto from "../../assets/images/thumb-1920-288376.jpg";
-import {followThunkCreator, unfollowThunkCreator, UserType} from "../../Redux/UsersReducer";
-import { NavLink } from "react-router-dom";
-import {globalAPI} from "../../API/API-TS";
+import {UserType} from "../../Redux/UsersReducer";
+import {NavLink} from "react-router-dom";
 
 type UsersTSXprops = {
     users: UserType[]
@@ -45,11 +44,11 @@ const UsersJSX = (props: UsersTSXprops) => {
                         {u.followed
                             ? <button disabled={props.following.some(id => id === u.id)}  onClick={() =>
 
-                            {props.unfollowThunkCreator( u.id)}}>Unfollow</button>
+                            {props.unfollowThunkCreator(u.id)}}>Unfollow</button>
 
                             : <button disabled={props.following.some(id => id === u.id)} onClick={() => {
 
-                                {props.followThunkCreator( u.id)
+                                {props.followThunkCreator(u.id)
 
                             }}}>Follow</button>}
 
@@ -71,11 +70,3 @@ const UsersJSX = (props: UsersTSXprops) => {
 }
 
 export default UsersJSX
-/*    currentPage: number
-    totalUsersCount: number
-    pageSize: number
-    users: UserType[]
-    onPageChanged: (currentPage: number) => void
-    following: Array<number>
-    unfollowThunkCreator: (userId: number) => void
-    followThunkCreator: (userId: number) => void*/

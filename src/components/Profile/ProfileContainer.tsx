@@ -6,6 +6,7 @@ import {Action} from "redux";
 import {getProfileThunkCreator, profileType} from "../../Redux/ProfileReducer";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
+import {withAuthRedirect} from "../../HOC/withAuthRederict";
 
 
 type PropsType = mapStateType & mapDispatchPropsType
@@ -17,7 +18,6 @@ type mapDispatchPropsType = {
 }
 type mapStateType = {
     profile: profileType
-    isAuth: boolean
 }
 
 type PasParamType = {
@@ -36,8 +36,6 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
     }
 
     render() {
-        if (!this.props.isAuth) return <Redirect to={"/login"}/>
-
         return (
             <Profile
                 {...this.props}
@@ -48,11 +46,9 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
 
 }
 
-
 let mapStateToProps = (state: AppRootStateType): mapStateType => {
     return {
         profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth
     }
 }
 
@@ -68,5 +64,5 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
 
 let WithUrlDataComponent = withRouter(ProfileContainer)
 
-export default connect (mapStateToProps, mapDispatchToProps) (WithUrlDataComponent);
+export default withAuthRedirect(connect (mapStateToProps, mapDispatchToProps) (WithUrlDataComponent))
 

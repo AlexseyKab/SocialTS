@@ -1,12 +1,16 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import SuperDialogsContainer from "./Myposts/SuperDialogsContainer";
+import {Redirect} from "react-router-dom";
+import {profileType} from "../../Redux/ProfileReducer";
 
 
 type ProfilePropsType = {
-    profile: any
+    profile: profileType
 }
 const Profile = (props: ProfilePropsType) => {
+
+
 
     return (
         <div>

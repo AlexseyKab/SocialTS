@@ -2,9 +2,9 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Action, Dispatch} from "redux";
-import {getProfileThunkCreator, profileType, setUserProfile} from "../../Redux/ProfileReducer";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Action} from "redux";
+import {getProfileThunkCreator, profileType} from "../../Redux/ProfileReducer";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
 
 
@@ -17,6 +17,7 @@ type mapDispatchPropsType = {
 }
 type mapStateType = {
     profile: profileType
+    isAuth: boolean
 }
 
 type PasParamType = {
@@ -35,6 +36,8 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
     }
 
     render() {
+        if (!this.props.isAuth) return <Redirect to={"/login"}/>
+
         return (
             <Profile
                 {...this.props}
@@ -48,7 +51,8 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
 
 let mapStateToProps = (state: AppRootStateType): mapStateType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 

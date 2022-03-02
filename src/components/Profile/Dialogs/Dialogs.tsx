@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import s from './Dialogs.module.css'
 import DialogsItem from "./DialogsItem/DialogsItem";
 import MessageProps from "./MessageProps/MessageProps";
-import {sendMessageAC, StoreType, updateNewMessageBodyAC} from "../../../Redux/State";
+import {Redirect} from "react-router-dom";
 
 export type DialogsType = {
     id: number
@@ -16,11 +16,10 @@ export type MessageType = {
 export type DialogsPropsType = {
     messages: Array<MessageType>
      dialogs: Array<DialogsType>
-    // store: StoreType
-    // messegesElement: any
     newMessageBody: string
     onSendMessageClick: (text: string)=> void
     onNewMessageChange: (e: any)=> void
+    isAuth: boolean
 }
 
 const Dialogs = (props: DialogsPropsType) =>{
@@ -36,6 +35,8 @@ const Dialogs = (props: DialogsPropsType) =>{
     function handlerClick() {
         props.onSendMessageClick(props.newMessageBody)
     }
+
+    if (!props.isAuth) return <Redirect to={"/login"}/>
 
     return (
         <div className={s.dialogs}>

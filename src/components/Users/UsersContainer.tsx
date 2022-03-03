@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Action} from "redux";
+import {Action, compose} from "redux";
 import {
     currentPageAC,
     followThunkCreator,
@@ -88,4 +88,4 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersAPI)
+export default compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps))(UsersAPI)

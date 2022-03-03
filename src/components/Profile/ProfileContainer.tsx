@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
-import {Action} from "redux";
+import {Action, compose} from "redux";
 import {getProfileThunkCreator, profileType} from "../../Redux/ProfileReducer";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
@@ -62,7 +62,5 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
 
 }
 
-let WithUrlDataComponent = withRouter(ProfileContainer)
-
-export default withAuthRedirect(connect (mapStateToProps, mapDispatchToProps) (WithUrlDataComponent))
+export default compose<React.ComponentType>(connect (mapStateToProps, mapDispatchToProps), withRouter, withAuthRedirect,) (ProfileContainer)
 

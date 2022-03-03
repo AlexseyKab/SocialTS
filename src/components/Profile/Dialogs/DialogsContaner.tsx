@@ -38,6 +38,8 @@ let mapDispatchToProps = (dispatch: Dispatch): MDTType => {
     }
 }
 
+
+
 const DialogsContainer = withAuthRedirect(connect<MSTType, MDTType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs))
 
 

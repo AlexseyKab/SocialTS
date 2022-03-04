@@ -1,4 +1,4 @@
-import {ProfileReducer, setUserProfileType} from "./ProfileReducer";
+import {ProfileReducer, setStatusType, setUserProfileType, updateStatusType} from "./ProfileReducer";
 import {DialogsReducer} from "./DialogsReducer";
 import {
     currentPageACType,
@@ -22,6 +22,7 @@ export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
     profile: any
+    status: string
 }
 export type DialogsType = {
     id: number
@@ -52,6 +53,8 @@ export type ActionsType =
     | setUserProfileType
     | setUsersDataType
     | followingProgressType
+    | setStatusType
+    | updateStatusType
 
 export type StoreType = {
     _state: StateType

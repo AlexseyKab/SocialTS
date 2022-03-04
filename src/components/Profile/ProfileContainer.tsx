@@ -3,8 +3,8 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Action, compose} from "redux";
-import {getProfileThunkCreator, profileType} from "../../Redux/ProfileReducer";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {getProfileThunkCreator, getStatus, profileType} from "../../Redux/ProfileReducer";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
 import {withAuthRedirect} from "../../HOC/withAuthRederict";
 
@@ -15,13 +15,16 @@ type ProfilePropsType = RouteComponentProps<PasParamType> & PropsType
 
 type mapDispatchPropsType = {
     getProfileThunkCreator: (userId: string) => void
+    getStatus: (userId: string) => void
 }
 type mapStateType = {
     profile: profileType
+    status: string
 }
 
 type PasParamType = {
     userId: string
+
 
 }
 
@@ -33,6 +36,7 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
             userId = '2'
         }
         this.props.getProfileThunkCreator(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
@@ -49,6 +53,7 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
 let mapStateToProps = (state: AppRootStateType): mapStateType => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 }
 
@@ -58,6 +63,9 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
         getProfileThunkCreator: (userId: string) => {
             dispatch(getProfileThunkCreator(userId))
         },
+        getStatus: (userId: string) => {
+            dispatch(getStatus(userId))
+        }
     }
 
 }

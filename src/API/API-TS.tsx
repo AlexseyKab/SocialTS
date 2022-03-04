@@ -34,7 +34,25 @@ export const globalAPI = {
             })
     },
     getProfile (userId: string) {
+        return profileAPI.getProfile(userId)
+    },
+}
+
+export const profileAPI = {
+    getProfile (userId: string) {
         return instance.get(`profile/` + userId)
+            .then(responce => {
+                return responce.data
+            })
+    },
+    getStatus (userId: string) {
+        return instance.get('/profile/status/' + userId)
+            .then(responce => {
+                return responce.data
+            })
+    },
+    updateStatus (status: string) {
+        return instance.put('profile/status', {status: status})
             .then(responce => {
                 return responce.data
             })

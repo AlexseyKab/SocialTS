@@ -1,10 +1,12 @@
-import {ProfileReducer, setStatusType, setUserProfileType, updateStatusType} from "./ProfileReducer";
+import {ProfileReducer, setStatusType, setUserProfileType} from "./ProfileReducer";
 import {DialogsReducer} from "./DialogsReducer";
 import {
     currentPageACType,
-    followACType, followingProgressType,
+    followACType,
+    followingProgressType,
     setUsersACType,
-    setUsersTotalCounterACType, toggleIsFetchingACType,
+    setUsersTotalCounterACType,
+    toggleIsFetchingACType,
     unfollowACType
 } from "./UsersReducer";
 import {setUsersDataType} from "./authReducer";
@@ -54,7 +56,7 @@ export type ActionsType =
     | setUsersDataType
     | followingProgressType
     | setStatusType
-    | updateStatusType
+
 
 export type StoreType = {
     _state: StateType

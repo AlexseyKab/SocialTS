@@ -29,10 +29,6 @@ export type setStatusType = {
     type: 'SET_STATUS',
     status: string
 }
-export type updateStatusType = {
-    type: 'UPDATE_STATUS',
-    status: string
-}
 
 
 let initializationState = {
@@ -80,19 +76,13 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
            }
        }
 
-       case "UPDATE_STATUS": {
-           return {
-               ...state,
-               status: action.status
-           }
-       }
        default:
            return state
    }
 }
 export const setUserProfile = (profile: profileType): setUserProfileType => ({type: 'SET_USERS_PROFILE', profile: profile})
 export const setStatus = (status: string): setStatusType => ({type: 'SET_STATUS',  status})
-export const updateStatusAC = (status: string): updateStatusType => ({type: 'UPDATE_STATUS', status})
+
 
 
 export const getProfileThunkCreator = (userId: string) => {
@@ -114,7 +104,9 @@ export const getStatus = (userId: string) => {
 export const updateStatus = (status: string) => {
     return (dispatch: Dispatch) => {
         profileAPI.updateStatus(status).then(data => {
-            dispatch(updateStatusAC(status))
+            if (data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
         })
     }
 }

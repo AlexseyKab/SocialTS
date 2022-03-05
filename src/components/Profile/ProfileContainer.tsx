@@ -38,7 +38,6 @@ class ProfileContainer extends React.Component<ProfilePropsType>{
         }
         this.props.getProfileThunkCreator(userId)
         this.props.getStatus(userId)
-       /* this.props.updateStatus(status)*/
     }
 
     render() {

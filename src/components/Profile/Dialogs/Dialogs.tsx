@@ -2,7 +2,6 @@ import React, {ChangeEvent} from "react";
 import s from './Dialogs.module.css'
 import DialogsItem from "./DialogsItem/DialogsItem";
 import MessageProps from "./MessageProps/MessageProps";
-import {Redirect} from "react-router-dom";
 
 export type DialogsType = {
     id: number
@@ -27,6 +26,30 @@ const Dialogs = (props: DialogsPropsType) =>{
 
     let messegesElement = props.messages.map(m => <MessageProps message={m.message}/>)
 
+    return (
+        <div className={s.dialogs}>
+            <div className={s.dialogsItem}>
+                {dialogsElement}
+            </div>
+            <div className={s.messages}>
+                <div>{messegesElement}</div>
+               <AddMessagesForm
+                   newMessageBody={props.newMessageBody}
+                   onSendMessageClick={props.onSendMessageClick}
+                   onNewMessageChange={props.onNewMessageChange}
+               />
+            </div>
+        </div>
+    )
+}
+type AddMessagesFormType = {
+    newMessageBody: string
+    onSendMessageClick: (text: string)=> void
+    onNewMessageChange: (e: any)=> void
+}
+
+
+const AddMessagesForm = (props: AddMessagesFormType) => {
     function handlerChange(e: ChangeEvent<HTMLTextAreaElement>) {
         props.onNewMessageChange(e.currentTarget.value)
     }
@@ -36,20 +59,12 @@ const Dialogs = (props: DialogsPropsType) =>{
     }
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItem}>
-                {dialogsElement}
-            </div>
-            <div className={s.messages}>
-                <div>{messegesElement}</div>
-                <div>
-                    <div><textarea value={props.newMessageBody}
-                                   onChange={handlerChange}
-                                   placeholder={"Введите текст"}/></div>
-                    <div><button onClick={handlerClick}>Send</button></div>
-                </div>
-            </div>
-        </div>
+        <form>
+            <div><textarea value={props.newMessageBody}
+                           onChange={handlerChange}
+                           placeholder={"Введите текст"}/></div>
+            <div><button onClick={handlerClick}>Send</button></div>
+        </form>
     )
 }
 

@@ -32,7 +32,7 @@ const LoginReduxForm = reduxForm<FormDataType>({
 
 const Login = () => {
     const onSubmit = (formData: FormDataType) => {
-
+        console.log(formData)
     }
     return (
         <div>

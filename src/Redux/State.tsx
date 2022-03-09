@@ -124,29 +124,7 @@ export const store: any = {
         return this._state
     },
     dispatch(action: any) {
-        console.log('dispatc', this, action)
-        // if (action.type === 'ADD-POST') {
-        //     let newPost: PostDataType = {
-        //         id: 5,
-        //         message: action.postText,
-        //         value: 0
-        //     }
-        //     this._state.profilePage.postData.push(newPost)
-        //     this._rerenderEntireTree(this._state);
-        // } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-        //     this._state.profilePage.newPostText = action.newPostText
-        //     this._rerenderEntireTree(this._state);
-        // } else
         this._state.profilePage = ProfileReducer(this._state.profilePage, action)
-        /*     if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-             this._state.dialogsPage.newMessageBody = action.body
-             this._rerenderEntireTree(this._state);
-         } else if (action.type === 'SEND-MESSAGE') {
-             let body = this._state.dialogsPage.newMessageBody
-             this._state.dialogsPage.newMessageBody = ''
-             this._state.dialogsPage.messages.push({id: 5, message: body})
-             this._rerenderEntireTree(this._state);
-         }*/
         this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
         this._rerenderEntireTree(this._state);
     }

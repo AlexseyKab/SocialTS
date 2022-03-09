@@ -1,7 +1,7 @@
 import React from "react";
 import Dialogs, {DialogsType, MessageType} from "./Dialogs";
 import {connect} from "react-redux";
-import {sendMessageAC, StateType, updateNewMessageBodyAC} from "../../../Redux/State";
+import {sendMessageAC, updateNewMessageBodyAC} from "../../../Redux/State";
 import {AppRootStateType} from "../../../Redux/Redux-Store";
 import {compose, Dispatch} from "redux";
 import {withAuthRedirect} from "../../../HOC/withAuthRederict";

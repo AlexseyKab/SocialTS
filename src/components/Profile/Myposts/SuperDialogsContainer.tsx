@@ -3,6 +3,7 @@ import {addPostAC, AddPostActiveType, onPostChangeAC, UpdatePostType} from "../.
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
+import {AppRootStateType} from "../../../Redux/Redux-Store";
 
 export type typeMyPostProps = {
     postData: Array<typePostData>
@@ -17,7 +18,7 @@ export type typePostData = {
 
 }
 
-let mapStateToProps = (state: any) => {
+let mapStateToProps = (state: AppRootStateType) => {
     return {
         postData: state.profilePage.postData,
         newPostText: state.profilePage.newPostText,

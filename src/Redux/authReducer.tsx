@@ -1,7 +1,11 @@
 import React from "react";
 import {ActionsType} from "./State";
 import {Dispatch} from "redux";
-import {globalAPI} from "../API/API-TS";
+import {globalAPI, profileAPI} from "../API/API-TS";
+import {ThunkAction} from "redux-thunk";
+import {AppRootStateType} from "./Redux-Store";
+
+const SET_USERS_DATA = 'SET_USERS_DATA'
 
 type LocalType = {
     city: string,
@@ -22,10 +26,10 @@ export type UserType = {
        photoUrl: string,
        location: LocalType*/
 }
-export type setUsersDataType = {
-    type: 'SET_USERS_DATA'
-    data: dataType
-}
+// export type setUsersDataType = {
+//     type: SET_USERS_DATA
+//     data: dataType
+// }
 
 export type dataType = {
     id: number | null
@@ -47,9 +51,15 @@ let initialState: ISType = {
     isAuth: false
 }
 
-const authReducer = (state: ISType = initialState, action: ActionsType): ISType => {
+type authReducerActionType =
+    | ReturnType<typeof setUsersDataAC>
+
+
+type ThunkType =  ThunkAction<void, AppRootStateType, unknown, ActionsType>
+
+const authReducer = (state: ISType = initialState, action: authReducerActionType) => {
     switch (action.type) {
-        case 'SET_USERS_DATA': {
+        case SET_USERS_DATA: {
             return {
                 ...state,
                  data: {...action.data},
@@ -61,7 +71,7 @@ const authReducer = (state: ISType = initialState, action: ActionsType): ISType 
     }
 }
 
-export const setUsersDataAC = (data: dataType): setUsersDataType => ({type: 'SET_USERS_DATA', data})
+export const setUsersDataAC = (data: dataType) => ({type: SET_USERS_DATA, data} as const)
 
 export const getAutThunk = () => {
     return (dispatch: Dispatch) => {
@@ -69,6 +79,34 @@ export const getAutThunk = () => {
             if (data.resultCode === 0) {
                 dispatch(setUsersDataAC(data.data))
             }
+        })
+    }
+}
+
+export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType => {
+    return (dispatch) => {
+        profileAPI.login(email, password, rememberMe).then(data => {
+            if (data.resultCode === 0) {
+
+                dispatch(getAutThunk())
+            }
+        })
+    }
+}
+/*export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType => async (dispatch) => {
+    try {
+       const result = await  profileAPI.login(email, password, rememberMe);
+          if (result.resultCode === 0) {
+              dispatch(getAutThunk())
+          }
+        } catch (e) {
+    }
+}*/
+
+export const logoutThunk = () => {
+    return (dispatch: Dispatch) => {
+        profileAPI.logout().then(data => {
+
         })
     }
 }

@@ -3,7 +3,7 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../Redux/Redux-Store";
 import {Action} from "redux";
-import {getAutThunk} from "../../Redux/authReducer";
+import {getAutThunk, logoutThunk} from "../../Redux/authReducer";
 import {ThunkDispatch} from "redux-thunk";
 
 
@@ -11,6 +11,7 @@ type HeaderProps = {
     isAuth: boolean
     login: string | null
     getAutThunk: () => void
+    logoutThunk: () => void
 }
 
 class HeaderContainer extends React.Component<HeaderProps> {
@@ -42,6 +43,9 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
     return {
         getAutThunk: () => {
             dispatch(getAutThunk())
+        },
+        logoutThunk: () => {
+            dispatch(logoutThunk())
         }
     }
 }

@@ -7,6 +7,7 @@ import {Action, Dispatch} from "redux";
 import {loginThunk, logoutThunk} from "../../Redux/authReducer";
 import {ThunkDispatch} from "redux-thunk";
 import {AppRootStateType} from "../../Redux/Redux-Store";
+import {Redirect} from "react-router-dom";
 
 type FormDataType = {
     login: string
@@ -40,6 +41,7 @@ const LoginReduxForm = reduxForm<FormDataType>({
 }) (LoginForm)
 
 type LoginType = {
+    isAuth: boolean
     loginThunk: (email: string, password: string, rememberMe: boolean) => void
 }
 
@@ -47,6 +49,11 @@ const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
         props.loginThunk(formData.login,  formData.password, formData.rememberMe)
     }
+
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
+    }
+
     return (
         <div>
             <h1>Login</h1>
@@ -61,10 +68,13 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
             dispatch(loginThunk(email, password, rememberMe))
         },
 
-        logoutThunk: () => {
-            dispatch(logoutThunk())
-        }
     }
 }
 
-export default connect (null, mapDispatchToProps) (Login)
+let mapStateToProps = (state: AppRootStateType) => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
+export default connect (mapStateToProps, mapDispatchToProps) (Login)

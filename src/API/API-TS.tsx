@@ -59,7 +59,7 @@ export const profileAPI = {
     },
 
     login (email: string, password: string, rememberMe: boolean) {
-        return instance.post<{data: any, resultCode: number}>('auth/login', { email, password, rememberMe })
+        return instance.post('auth/login', { email, password, rememberMe })
             .then(responce => responce.data)
     },
 

@@ -53,6 +53,7 @@ let initialState: ISType = {
 
 type authReducerActionType =
     | ReturnType<typeof setUsersDataAC>
+    | ReturnType<typeof setUsersDataAC>
 
 
 type ThunkType =  ThunkAction<void, AppRootStateType, unknown, ActionsType>
@@ -63,7 +64,7 @@ const authReducer = (state: ISType = initialState, action: authReducerActionType
             return {
                 ...state,
                  data: {...action.data},
-                isAuth: true
+                isAuth: action.isAuth
             }
         }
         default:
@@ -71,13 +72,14 @@ const authReducer = (state: ISType = initialState, action: authReducerActionType
     }
 }
 
-export const setUsersDataAC = (data: dataType) => ({type: SET_USERS_DATA, data} as const)
+export const setUsersDataAC = (data: dataType, isAuth: boolean) => ({type: SET_USERS_DATA, data, isAuth} as const)
+
 
 export const getAutThunk = () => {
     return (dispatch: Dispatch) => {
         globalAPI.getAutMe().then(data => {
             if (data.resultCode === 0) {
-                dispatch(setUsersDataAC(data.data))
+                dispatch(setUsersDataAC(data.data, true))
             }
         })
     }
@@ -85,14 +87,29 @@ export const getAutThunk = () => {
 
 export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType => {
     return (dispatch) => {
-        profileAPI.login(email, password, rememberMe).then(data => {
+        profileAPI.login(email, password, rememberMe)
+            .then(data => {
             if (data.resultCode === 0) {
-
                 dispatch(getAutThunk())
             }
         })
     }
 }
+
+
+export const logoutThunk = () => {
+    return (dispatch: Dispatch ) => {
+        profileAPI.logout().then(data => {
+            if (data.resultCode === 0) {
+                dispatch(setUsersDataAC({login: null, email: null, id: null}, false))
+            }
+        })
+    }
+}
+
+
+export default authReducer
+
 /*export const loginThunk = (email: string, password: string, rememberMe: boolean): ThunkType => async (dispatch) => {
     try {
        const result = await  profileAPI.login(email, password, rememberMe);
@@ -102,15 +119,3 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
         } catch (e) {
     }
 }*/
-
-export const logoutThunk = () => {
-    return (dispatch: Dispatch) => {
-        profileAPI.logout().then(data => {
-
-        })
-    }
-}
-
-
-export default authReducer
-

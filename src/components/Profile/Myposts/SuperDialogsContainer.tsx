@@ -27,7 +27,7 @@ let mapStateToProps = (state: AppRootStateType) => {
 
 let mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        addPost: (postText: string) => {  dispatch(addPostAC(postText))},
+        addPost: (newPostText: string) => {  dispatch(addPostAC(newPostText))},
         onPostChange: (postText: string) => { dispatch(onPostChangeAC(postText))}
     }
 }

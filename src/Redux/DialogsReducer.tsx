@@ -27,7 +27,6 @@ export const DialogsReducer = (state: DialogsPageType = initializationState, act
         return {
             ...state,
             messages: state.messages.concat({id: 5, message: action.value}),
-            newMessageBody: ''
         }
 
     }

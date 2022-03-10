@@ -67,7 +67,7 @@ export type StoreType = {
 }
 export type AddPostActiveType = {
     type: 'ADD-POST'
-    postText: string
+    newPostText: string
 }
 
 export type UpdatePostType = {
@@ -129,10 +129,10 @@ export const store: any = {
         this._rerenderEntireTree(this._state);
     }
 }
-export const addPostAC = (postText: string): AddPostActiveType => {
+export const addPostAC = (newPostText: string): AddPostActiveType => {
     return {
         type: "ADD-POST",
-        postText: postText
+        newPostText: newPostText
     }
 }
 export const onPostChangeAC = (newPostText: string): UpdatePostType => {

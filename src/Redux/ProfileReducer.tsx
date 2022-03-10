@@ -48,7 +48,7 @@ const ProfileReducer = (state: ProfilePageType = initializationState, action: Ac
        case 'ADD-POST': {
            let newPost: PostDataType  = {
                id: 5,
-               message: state.newPostText,
+               message: action.newPostText,
                value: 0
            }
            return {

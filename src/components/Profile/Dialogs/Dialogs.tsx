@@ -11,6 +11,8 @@ export type DialogsType = {
     name: string
 }
 
+
+
 export type MessageType = {
     message: string
 }

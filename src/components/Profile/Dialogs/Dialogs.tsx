@@ -8,7 +8,7 @@ import {maxLengthCreator, requiredField} from "../../../utils/Validators/validat
 
 export type DialogsType = {
     id: number
-    name: string// commit
+    name: string
 }
 
 

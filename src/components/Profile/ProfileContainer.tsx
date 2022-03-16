@@ -75,6 +75,6 @@ let mapDispatchToProps = (dispatch: ThunkDispatch<AppRootStateType, void, Action
     }
 
 }
-
+//commit
 export default compose<React.ComponentType>(connect (mapStateToProps, mapDispatchToProps), withRouter, withAuthRedirect,) (ProfileContainer)
 
